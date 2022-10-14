@@ -1,0 +1,47 @@
+extend ../layouts/common.pug
+block head
+     title Tạo Đội Bóng - Quản Lý
+block content
+     .container 
+          .row 
+               form.px-5.w-75.mx-auto.col(action="teams" id="create" method="POST" enctype="multipart/form-data")
+                    h1.text-center Tạo Đội Bóng
+                    if errors
+                         for err in errors 
+                              .alert.alert-danger.w-75.mx-auto(role='alert')= err
+                    .mb-3
+                         label.form-label(for='team') Đội Bóng
+                         input.form-control(type='text' placeholder='Tên Đội' name='name' id="team" value= "" || body.name)
+                    .mb-3
+                         label.form-label(for='description') Mô Tả
+                         textarea.form-control(rows='3' id = "description", name='description' value="" || body.description)
+                    .mb-3
+                         label.form-label(for='coach') Huấn Luyện Viên
+                         input.form-control(type='text' placeholder='Tên Huấn Luyện Viên' name='coach' id="coach" value="" || body.coach)
+                    .mb-3
+                         label.form-label(for='founded') Ngày Thành Lập
+                         input.form-control(type='date' name='founded' id="founded" value= "" || body.founded)
+                    .mb-3
+                         label.form-label(for='logo') Biểu Tượng Đội Bóng
+                         input.form-control(type='file' name='logo' id="logo" accept="image/*")
+                    .h4 Sân Vận Động
+                    .mb-3
+                         label.form-label(for='stadiumName') Sân Vận Động
+                         input.form-control(type='text' name='stadiumName' id="stadiumName" placeholder="Tên Sân Vận Động" value= "" || body.stadiumName)
+                    .mb-3
+                         label.form-label(for='address') Địa Chí
+                         input.form-control(type='text' name='address' id="address" placeholder="Địa Chí" value= "" || body.address)
+                    .mb-3
+                         label.form-label(for='capacity') Sức Chứa
+                         input.form-control(type='text' name='capacity' id="capacity" placeholder="Tên Sức Chứa" value= "" || body.capacity)
+                    input(type="hidden" id="players" name="players" value="[]")
+                    .mb-3.w-50.mx-auto
+                         input.btn.btn-primary.form-control(type="submit" value="Create")
+               .col-lg-6
+                    .d-flex.justify-content-between
+                         div.h2 Danh Sách Cầu Thủ
+                         button.btn.btn-primary.mb-3(type='button' onclick="playerForm({})") + Thêm Cầu Thủ
+                    include ../components/playerTable.pug
+block script
+     script.
+          document.querySelector("tbody").innerHTML = "";

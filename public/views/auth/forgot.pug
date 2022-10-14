@@ -1,0 +1,16 @@
+extend ../layouts/common.pug
+
+block head
+     title Forgot Password
+block content 
+      .container
+          h2.text-center Reset Password
+          if errors 
+               each error in errors 
+                    .alert.alert-danger.w-75.mx-auto.my-2= error
+          form(action="/forgot", method="post").w-50.m-auto
+               input.form-control.my-2(type="email", name="email", placeholder="Enter your email to recover your account")
+               input.btn.btn-primary.w-50.d-block.mx-auto(type="submit", name="submit", value="Reset Password")
+               .d-flex.justify-content-center
+                    span Do not have an account?  
+                         a(href="/register") create new account

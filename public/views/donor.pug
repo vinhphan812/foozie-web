@@ -1,0 +1,21 @@
+extend ./layouts/common.pug
+block head
+     title= donor.name
+block content 
+     .d-flex.justify-content-center.flex-column.align-items-center
+          img(src=donor.logo_path, width="50%").my-2
+          .h1= donor.name
+     .alert.alert-secondary
+          .h3 Thông Tin Nhà Tài Trợ
+          p.mx-4= donor.description
+          .h3 Thông Tin Liên Hệ
+          div.mx-4
+               div
+                    span.fw-bold Email: 
+                    span.text-muted=donor.email
+               div
+                    span.fw-bold Số Điện Thoại: 
+                    span.text-muted=donor.phone
+               div
+                    span.fw-bold Địa Chỉ: 
+                    span.text-muted=donor.address

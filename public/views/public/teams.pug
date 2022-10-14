@@ -1,0 +1,12 @@
+extend ../layouts/common.pug
+
+block head
+     title Các Đội Bóng
+
+block content
+     .row.justify-content-evenly
+          each team in teams
+               a.card.col-md-3.my-2.text-decoration-none(style='width: 18rem;' href="/teams/" + team.id)
+                    img.card-img-top.mx-auto.w-50.my-3(src=team.logo_path alt='Biểu tượng của ' + team.name)
+                    .card-body
+                         .card-title.h5.text-center.text-black= team.name

@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  background:white;
+}
+.wrapper{
+    width: 100%;
+    padding: 25px 30px 30px 30px;
+    border-radius: 5px;
+  }
+  .wrapper header{
+    font-size: 30px;
+    font-weight: 600;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    background: red;
+  }
+  .wrapper nav{
+    margin-top: 20px;
+    position: relative;
+    width: 80%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+  .wrapper nav label{
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    color: black;
+    font-size: 17px;
+    border-radius: 5px;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+  }
+  #new:checked ~ nav label.new,
+  #old:checked ~ nav label.old,
+  #go:checked ~ nav label.go,
+  #return:checked ~ nav label.return,
+  #all:checked ~ nav label.all{
+    color: #fff;
+  }
+  nav .slider{
+    position: absolute;
+    height: 100%;
+    width: 20%;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+    border-radius: 5px;
+    background: red;
+    transition: all 0.3s ease;
+  }
+  input[type="radio"]{
+    display: none;
+  }
+  #old:checked ~ nav .slider{
+    left: 20%;
+  }
+  #go:checked ~ nav .slider{
+    left: 40%;
+  }
+  #return:checked ~ nav .slider{
+    left: 60%;
+  }
+  #all:checked ~ nav .slider{
+    left: 80%;
+  }
+  section .content{
+    display: none;
+    background: #fff;
+  }
+  #new:checked ~ section .content-1,
+  #old:checked ~ section .content-2,
+  #go:checked ~ section .content-3,
+  #return:checked ~ section .content-4,
+  #all:checked ~ section .content-5{
+    display: block;
+  }
+/* schdule */
+.schedule-all{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    margin-top: 100px;
+}
+.schedule-all .match-all{
+    position: relative;
+    display: grid;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+}
+.schedule-all table{
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid black;
+}
+.schedule-all table:last-child{
+    border-bottom: none;
+}
+.schedule-all table thead{
+    font-weight: 600;
+    font-size: 20px;
+}
+.schedule-all table tr:last-child{
+    border-bottom:none ;
+}
+.schedule-all table tr td{
+    padding: 10px;
+}
+.schedule-all table tr td:nth-child(2){
+    text-align: center;
+}
+.schedule-all table tr td:nth-child(3){
+    text-align: center;
+}
+.schedule-all table tr td:nth-child(4){
+    text-align: end;
+}
+.schedule-all table tr td:nth-child(5){
+    text-align: center;
+}
+.schedule-all table tr td:nth-child(6){
+    text-align: start;
+}

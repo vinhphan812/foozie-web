@@ -1,0 +1,32 @@
+extend ../layouts/common.pug
+
+block head 
+     title Sign Up Account - #{APP_NAME}
+block content
+     form(action="/sign_in" method="POST" id="login").bg-white.p-5.shadow-sm
+          if errors && errors.length
+               each val in errors
+                    .alert.alert-danger= val
+          .container
+               .h2.text-center Đăng ký tài khoản
+               .row.justify-content-center
+                    .col-md-6.container
+                         .row.mb-2
+                              .col-md-6.p-0.pe-2
+                                   input.form-control(type='text' placeholder="Họ")
+                              .col-md-6.p-0
+                                   input.form-control(type="text" name="lastname" placeholder="Tên")
+                         .row.mb-2
+                              input.col-md-6.form-control(type="text" name="phone" placeholder="Số điện thoại")
+                         .row.mb-2
+                              input.col-md-6.form-control(type="email" name="email" placeholder="Email")
+                         .row.mb-2
+                              input.col-md-6.form-control(type="text" name="username" placeholder="Tên đăng nhập")
+                         .row.mb-2
+                              input.col-md-6.form-control(type='password' placeholder="Mật khẩu")
+                         .row.mb-2
+                              input.col-md-6.form-control(type='password' placeholder="Xác nhận mật khẩu")
+                              .form-text 
+                                   span Bạn đã có tài khoản? 
+                                   a(href="/sign_in") đăng nhập
+                         input.form-control.mb-2.btn.btn-primary(type="submit" value="Đăng ký")

@@ -1,0 +1,366 @@
+body {
+	background: #dcdcdc;
+}
+.cardBox {
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 30px;
+}
+.cardBox .card {
+	position: relative;
+	background: #f5f5f5;
+	padding: 30px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: space-between;
+	box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+	cursor: pointer;
+}
+.cardBox .card .numbersCard {
+	position: relative;
+	font-weight: 500;
+	font-size: 2.5em;
+	color: #000000;
+}
+.cardBox .card .cardName {
+	color: #696969;
+	font-size: 1.1em;
+	margin-top: 5px;
+}
+.cardBox .card .iconCard {
+	font-size: 3.5em;
+	color: #696969;
+}
+.cardBox .card:hover {
+	background: #2b2f31;
+}
+.cardBox .card:hover .numbersCard,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconCard {
+	color: white;
+}
+/* calendar */
+.calendar {
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	grid-gap: 10px;
+	margin-top: 10px;
+}
+.recentMatch {
+	position: relative;
+
+	min-height: 500px;
+	background: white;
+	padding: 20px;
+	box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+	border-radius: 20px;
+}
+.cardHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.stadium {
+	padding: 2px 4px;
+	background: #800000;
+	border-radius: 5px;
+	color: white;
+	font-weight: 500;
+}
+.team {
+	position: relative;
+	display: grid;
+	min-height: 500px;
+	padding: 20px;
+	box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+	border-radius: 20px;
+	background: white;
+}
+.team .imgBox {
+	position: relative;
+	width: 50px;
+	height: 50px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+.team .imgBox img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.team table tr:hover {
+	background: #2b2f31;
+	color: white;
+}
+.team table tr td {
+	padding: 12px 10px;
+}
+/* timeline */
+.wrapper-timeline {
+	max-width: 1080px;
+	margin: 50px auto;
+	padding: 0 20px;
+	position: relative;
+}
+.wrapper-timeline .header-timeline {
+	width: 100%;
+	display: flex;
+	font-weight: 600;
+	justify-content: center;
+	padding: 20px;
+}
+.wrapper-timeline .center-line {
+	position: absolute;
+	height: 100%;
+	background: white;
+	width: 4px;
+	left: 50%;
+	top: 100px;
+	transform: translateX(-50%);
+}
+.wrapper-timeline .row {
+	display: flex;
+}
+.wrapper-timeline .row-1 {
+	justify-content: flex-start;
+}
+.wrapper-timeline .row-2 {
+	justify-content: flex-end;
+}
+.wrapper-timeline .row {
+	display: flex;
+}
+.wrapper-timeline .row section {
+	background: white;
+	border-radius: 5px;
+	width: calc(50% - 40px);
+	padding: 20px;
+	position: relative;
+}
+.wrapper-timeline .row section::before {
+	position: absolute;
+	content: "";
+	height: 15px;
+	width: 15px;
+	background: #eee;
+	top: 28px;
+	transform: rotate(45deg);
+	z-index: -1;
+}
+.row-1 section::before {
+	right: -7px;
+}
+.row-2 section::before {
+	left: -7px;
+}
+.row section .icon-timeline,
+.center-line .scroll-icon {
+	position: absolute;
+	background: white;
+	height: 40px;
+	width: 40px;
+	font-size: 17px;
+	color: #2b2f31;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 50%;
+	box-shadow: 0 0 0 4px #fff, inset 0 2px 0 rgba(0, 0, 0, 0.08),
+		0 3px 0 4px rgba(0, 0, 0, 0.05);
+}
+.center-line .scroll-icon {
+	bottom: 0px;
+	left: 50%;
+	font-size: 25px;
+	transform: translateX(-50%);
+}
+.row-1 section .icon-timeline {
+	right: -60px;
+	top: 13px;
+}
+.row-2 section .icon-timeline {
+	left: -60px;
+	top: 13px;
+}
+.row section .details-timeline,
+.row section .bottom-timeline {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.row section .details-timeline .title-timeline {
+	font-size: 22px;
+	font-weight: 600;
+}
+.row section p {
+	margin: 10px 0 17px 0;
+}
+.row section .bottom-timeline a {
+	text-decoration: none;
+	background: #2b2f31;
+	color: white;
+	padding: 7px 15px;
+	border-radius: 5px;
+	font-size: 17px;
+	font-weight: 500;
+}
+/* news */
+
+.info-box {
+	margin: 20px;
+	padding: 20px;
+	border: 2px solid black;
+	border-radius: 4px;
+	transition: all 0.3s ease;
+	color: #333;
+	text-decoration: none;
+}
+.info-box .fas {
+	font-size: 70px;
+	margin: 16px 0;
+}
+
+.info-box:hover {
+	color: white;
+}
+.info-box:hover a {
+	border-color: white !important;
+	background: white;
+}
+.cup:hover {
+	border-color: #ffc233;
+	background: #ffc233;
+}
+.cup:hover a {
+	color: #ffc233;
+}
+.news:hover {
+	border-color: #ff0000;
+	background: #ff0000;
+}
+.news:hover a {
+	color: #ff0000;
+}
+.rules:hover {
+	border-color: #007e00;
+	background: #007e00;
+}
+.rules:hover a {
+	color: #007e00;
+}
+.info-box h2 {
+	font-size: 30px;
+	margin: 16px 0;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.info-box a {
+	width: 50%;
+	background: black;
+	color: white;
+	text-decoration: none;
+	text-transform: uppercase;
+	border: 1px solid black;
+	padding: 0.5rem 1rem;
+	border-radius: 25px;
+	transition: 0.3s ease;
+}
+.info-box a:hover {
+	border-radius: 4px;
+}
+/*sponsor*/
+@keyframes scroll {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(calc(-250px * 7));
+	}
+}
+.sponsor-slide {
+	height: 200px;
+	margin: auto;
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 100px;
+}
+.sponsor-slide .logo-track {
+	animation: scroll 40s linear infinite;
+	display: flex;
+	width: calc(250px * 14);
+}
+
+.sponsor-slide .logo img {
+	width: 100%;
+	height: 100%;
+}
+
+.sponsor-slide .logo {
+	height: 128px;
+	width: 128px;
+	margin: 0 1rem;
+}
+@media (max-width: 991px) {
+	.cardBox {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.services {
+		display: flex;
+		flex-direction: column;
+	}
+}
+@media (max-width: 768px) {
+	.calendar {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.wrapper-timeline .center-line {
+		left: 30px;
+	}
+	.wrapper-timeline .row {
+		margin: 30px 0 3px 60px;
+	}
+	.wrapper-timeline .row section {
+		width: 100%;
+	}
+	.row-1 section::before {
+		left: -7px;
+	}
+	.row-1 section .icon-timeline {
+		left: -60px;
+	}
+	.recentMatch {
+		overflow: auto;
+	}
+	.stadium {
+		white-space: nowrap;
+	}
+}
+@media (max-width: 480px) {
+	.cardBox {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.cardHeader h1 {
+		font-size: 20px;
+	}
+	.wrapper-timeline .center-line,
+	.row section::before,
+	.row section .icon-timeline {
+		display: none;
+	}
+	.wrapper-timeline .row {
+		margin: 10px 0;
+	}
+	.wrapper-timeline .header-timeline {
+		font-size: 12px;
+	}
+}

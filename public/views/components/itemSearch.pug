@@ -1,0 +1,29 @@
+
+- var type
+- var color;
+- var link = `/${item._doc.type}/${item._id}`;
+
+case item._doc.type
+     when "leagues"
+          - type= "Giải Đấu"; color = "bg-danger"; 
+     when "matchs"
+          - type= "Trận Đấu"; color = "bg-secondary"; link = `/leagues/${item.league.id}/${item._doc.type}/${item.id}`
+     when "teams"
+          - type = "Đội Bóng"; color = "bg-success"
+     when "players"
+          - type = "Cầu Thủ"; color = "bg-info"; link = `/teams/${item.team}/${item._doc.type}/${item.id}`
+     when "referees"
+          - type = "Trọng Tài"; color = "bg-dark"
+     when "donors"
+          - type = "Nhà tài trợ"; color = "bg-warning"
+     default
+          - type= "Default"; color = "bg-primary"
+
+
+a.d-block.text-decoration-none.border-bottom.my-2(href=link)
+     .d-flex.align-items-start
+          span.h2= item.name 
+          span.badge.mx-2.rounded-pill(class=color)= type
+          if item._doc.type == "matchs" 
+               span.badge.mx-2.rounded-pill.bg-danger= item.league.name
+     .h6.show-less-1.text-muted= item.description

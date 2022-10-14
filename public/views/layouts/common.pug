@@ -1,0 +1,101 @@
+doctype html
+html(lang="en")
+     head 
+          block head
+          meta(charset='utf-8')
+          meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+          link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU' crossorigin='anonymous')
+          link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css')
+          link(href="/public/css/style.css" rel="stylesheet")
+          if links
+               for link in links
+                    link(href=link, rel='stylesheet')
+     body
+          nav.navbar.navbar-expand-lg.navbar-dark.dark.text-light
+               .container
+                    a.navbar-brand(href='/') Football League
+                    button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+                         span.navbar-toggler-icon
+                    #navbarSupportedContent.collapse.navbar-collapse
+                         ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                              li.nav-item
+                                   a.nav-link.active(aria-current='page' href='/') Trang Chủ
+                              if menu
+                                   for item in menu 
+                                        li.nav-item
+                                             a.nav-link.active(aria-current='page' href=item.url)= item.title
+                              li.nav-item
+                                   a.nav-link.active(aria-current='page' href='/rules') Quy Định
+                         if !isSearch
+                              form.d-flex.p-2(action="/search")
+                                   input.form-control.me-2(type='search' placeholder='Tìm Kiếm' name="q" aria-label='Search')
+                                   input(type="hidden" name="type" value="all")
+                                   button.btn.btn-outline-light.w-50(type='submit') Tìm Kiếm
+
+                         if !isLogin
+                              if user
+                                   .dropdown
+                                        button#dropdownMenuButton1.btn.btn-secondary.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                                             img(src=user.avatar class="user-avatar" alt=user.name)
+                                             span= user.username
+                                        ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
+                                             li
+                                                  a.dropdown-item(href='/detail') Chi Tiết
+                                             li
+                                                  a.dropdown-item(href='/logout') Đăng Xuất
+                              else     
+                                   a.text-light(href="/login") Đăng Nhập
+          main.container.py-5
+               block content
+     block footer
+          footer.dark
+               .container.px-5.pt-5
+                    .row
+                         .col-sm-3
+                              h5 Get started
+                              ul
+                                   li
+                                        a(href='#') Home
+                                   li
+                                        a(href='#') Sign up
+                                   li
+                                        a(href='#') Downloads
+                         .col-sm-3
+                              h5 About us
+                              ul
+                                   li
+                                        a(href='#') Company Information
+                                   li
+                                        a(href='#') Contact us
+                                   li
+                                        a(href='#') Reviews
+                         .col-sm-3
+                              h5 Support
+                              ul
+                                   li
+                                        a(href='#') FAQ
+                                   li
+                                        a(href='#') Help desk
+                                   li
+                                        a(href='#') Forums
+                         .col-sm-3
+                              h5 Legal
+                              ul
+                                   li
+                                        a(href='#') Terms of Service
+                                   li
+                                        a(href='#') Terms of Use
+                                   li
+                                        a(href='#') Privacy Policy
+               .footer-copyright.py-2.text-white.text-center
+                    p.m-0 &copy; Football League 2021
+
+     if scripts 
+          for script in scripts
+               script(src=script)
+     block script
+     script(src='//cdn.jsdelivr.net/npm/sweetalert2@11')
+     script(src='/public/js/script.js')
+     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js' integrity='sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+     script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
+     script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js' integrity='sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ' crossorigin='anonymous')

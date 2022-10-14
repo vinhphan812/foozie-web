@@ -1,0 +1,106 @@
+extend ./layouts/common.pug
+block head 
+     title= league.name
+block script
+     script.
+          const league = "#{league._id}"
+block content
+     .containter
+          .row
+               .col-md-3
+                    .update.text-center.logo
+                         img.image-fluid.w-75.mb-2(src=league.logo_path)
+                         if isManager
+                              button.btn.btn-warning.py-0.edit
+                                   i.bi.bi-pencil-square
+               .col-md
+                    .d-flex.justify-content-between
+                         div
+                              .h1.fw-bold.league-name= league.name
+                              div
+                                   span.fw-bold Thời gian bắt đầu: 
+                                   span.text-muted.start-league= moment(league.startTime).format("DD/MM/yyyy") 
+                         if isManager
+                              .d-flex.flex-column.justify-content-center
+                                   button.btn.btn-warning.league-editor.my-2
+                                        i.bi.bi-pencil-square
+                                        span &nbsp;Chỉnh sửa giải đấu
+                                   button.btn.btn-danger.league-delete
+                                        i.bi.bi-pencil-square
+                                        span &nbsp;Xóa giải đấu
+                    div.alert.alert-info.my-3.description
+                         .h3 Thông tin giải đấu
+                         p= league.description || "Hiện chưa có thông tin mô tả nào cho giải đấu!"
+          hr
+          .row
+               .alert.alert-primary
+                    .h5 Hình thức thi đấu
+                    p Thi đấu vòng tròn là một thể thức thi đấu thú vị vì số trận đấu sẽ tăng lên gấp nhiều lần, khiến cuộc đấu tăng thêm phần hấp dẫn, tạo điều kiện thuận lợi cho các đội có cơ hội cọ sát, học tập lẫn nhau để nâng cao trình độ. Thi đấu vòng tròn một lượt hoặc hai lượt là tất cả những đội tham gia thi đấu chỉ gặp một lần với một lượt và gặp nhau hai lần ( lượt đi và lượt về ) và căn cứ vào số điểm đạt đượt của các đôi trong quá trình thi đấu để sắp xếp thứ tự . 
+               .col-md.matchs
+                    .d-flex.justify-content-between
+                         h2 Trận Đấu
+                         .d-flex.align-items-center
+                              select.form-select#filter-matchs.w-50
+                                   option(value='all') Tất cả
+                                   option(value='go') Lượt đi
+                                   option(value='back') Lượt về
+                              input#search-match.form-control.mx-2(type='text' placeholder='Tìm Kiếm')
+                    table.table.table-hover.text-center
+                         thead 
+                              tr 
+                                   th Ngày thi đấu
+                                   th Sân Vận Động
+                                   th Đội Nhà
+                                   th.d-none.d-lg-table-cell
+                                   th Tỷ Số 
+                                   th.d-none.d-lg-table-cell
+                                   th Đội Khách
+                                   th
+                         tbody.align-middle
+                              - var i=0
+                              while i++ < 14
+                                   tr.placeholder-glow
+                                        td 
+                                             span.placeholder.w-100
+                                        td 
+                                             span.placeholder.w-100
+                                        td 
+                                             span.placeholder.w-100
+                                        td 
+                                             span.placeholder.w-100
+                                        td 
+                                             span.placeholder.w-100
+                                        td 
+                                             span.placeholder.w-100
+                                        td 
+                                             span.placeholder.w-100
+               .col-md-3
+                    div
+                         .h3 Bảng Thống Kê
+                         ul.list-group.list-group-flush.ms-4
+                              li.list-group-item
+                                   span.fw-bold Trận đấu:&nbsp;
+                                   span.total-matchs 0
+                              li.list-group-item
+                                   span.fw-bold Đã đá:&nbsp;
+                                   span.total-done 0
+                              if isManager
+                                   li.list-group-item
+                                        span.fw-bold Đã cập nhật:&nbsp;
+                                        span.total-updated 0
+                         if isManager
+                              a(href=`/manager/leagues/${league._id}/report`).btn.btn-dark.w-100.my-2 Tổng kết giải
+                    hr
+                    div 
+                         .h3 Bảng Xếp Hạng
+                         table.table.table-hover.align-middle.text-center.rank
+                              tbody
+                                   - var i=0
+                                        while i++ < 10
+                                             tr.placeholder-glow
+                                                  td 
+                                                       span.placeholder.w-100
+                                                  td 
+                                                       span.placeholder.w-100
+                                                  td 
+                                                       span.placeholder.w-100

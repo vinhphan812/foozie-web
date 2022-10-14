@@ -1,0 +1,34 @@
+extend ../layouts/common.pug
+
+block head
+     title Thêm Nhà Tài Trợ Mới
+block content 
+     .h1.text-center.mb-5 Thêm Nhà Tài Trợ Mới
+     if errors
+          for err in errors 
+               .alert.alert-danger.w-50.mx-auto(role='alert')= err
+
+     form.px-5.w-50.mx-auto(action="donors", method="POST" enctype="multipart/form-data")
+          .mb-3
+               label.form-label(for='donors') Nhà Tài Trợ
+               input.form-control(type='text' placeholder='Tên nhà tài trợ' name='name' id="donors" value= body.name || "")
+          .mb-3
+               label.form-label(for='description') Mô Tả
+               textarea.form-control(rows='3' id = "description", name='description' placeholder="mô tả về nhà tài trợ mới" value = body.description || "")
+          .mb-3
+               label.form-label(for='address') Địa Chỉ
+               input.form-control(type='text' placeholder='Địa chỉ trụ sở nhà tài trợ' name='address' id="address" value= body.address || "")
+          .mb-3
+               label.form-label(for='email') Email
+               input.form-control(type='text' placeholder='Email' name='email' id="email" value= body.email || "")
+          .mb-3
+               label.form-label(for='phone') Số Điện Thoại
+               input.form-control(type='text' placeholder='liên hệ nhà tài trợ' name='phone' id="phone" value= body.phone || "")
+          .mb-3
+               label.form-label(for='startTime') Tài Trợ ($)
+               input.form-control(type='number' name='funding' min="100" id="funding" value= body.fuding || 100)
+          .mb-3
+               label.form-label(for='thumnails') Biểu Tượng
+               input.form-control(type='file' name='logo' id="thumnails" accept="image/*")
+          .mb-3
+               input.btn.btn-primary.form-control(type="submit" value="Create")

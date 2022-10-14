@@ -1,0 +1,16 @@
+mixin renderTeam(team)
+     a(href=`${isManager ? "/manager" : ""}/teams/${team.id}`).text-center
+          img.image-fluid.w-75.mb-2(src=team.logo_path)
+          .h6=team.name
+
+mixin renderStartTime(date)
+     -var today = moment();
+     -var start = moment(date);
+     -var isHappend = today - start;
+     .h5.fw-bold= (isHappend > 0 ? "Đã diễn" : "Diễn") + " ra vào"
+     .h6= today.format('DD/MM/yyyy') != start.format('DD/MM/yyyy') ? moment(match.date).format("HH:mm DD/MM/yyyy") : start.format("HH:mm") + ", hôm nay"
+
+mixin renderReferee(referee)
+     a(href=`${isManager ? "/manager" : ""}/referees/${referee.id}`).d-flex.flex-column.align-items-center.text-decoration-none
+          img.logo-image(src=referee.avatar)
+          .h4= referee.name

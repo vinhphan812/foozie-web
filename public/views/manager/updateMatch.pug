@@ -1,0 +1,63 @@
+extend ../layouts/common.pug
+block head 
+     title=match.name
+block script
+     script.
+          const match = {id: "#{match.id}", teamA: "#{match.teams[0].id}", teamB: "#{match.teams[1].id}"}
+          const league = "#{match.league}"
+block content
+     -const team1Id = match.teams[0]._id
+     -const team2Id = match.teams[1]._id
+     -const team1 = match.teams[0].name
+     -const team2 = match.teams[1].name
+     .d-flex.justify-content-between.align-items-center
+          h1.text-center Kết quả trận đấu
+          button.btn.btn-primary(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Thêm kết quả
+     if errors
+          each error in errors
+               .alert.alert-danger= error
+     #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+          .modal-dialog
+               .modal-content
+                    .modal-header
+                         h5#exampleModalLabel.modal-title Cập nhật kết quả
+                         button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                    .modal-body
+                         form(method="POST" id="form")
+                              .mb-3
+                                   label(for="team" class="form-label") Đội bóng
+                                   select.form-select(onchange="renderPlayerSelect(this)" id="team")
+                                        option(value=team1Id, selected)= team1
+                                        option(value=team2Id)= team2
+                              #playerSelected
+                                   .mb-3
+                                        label.form-label(for='player') Cầu thủ
+                                        input#player.form-control(list='players' autocomplete="off")
+                                        datalist#players
+                                   .mb-3
+                                        label.form-label(for='type') Chọn hành động
+                                        select#type.form-select
+                                             option(value='goal') Ghi bàn
+                                             option(value='yellow') Thẻ vàng
+                                             option(value='red') Thẻ đỏ
+                                   .mb-3
+                                        label.form-label(for='player') Thời điểm
+                                        input#time.form-control(type='text' placeholder='Thời điểm')
+
+                              #alertMessage
+                              input(type="hidden" name="details" id="details")
+                    .modal-footer
+                         button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Đóng
+                         button.btn.btn-primary(type='button' id="addBtn") Ghi Nhận
+     .min-3
+          table.table.table-responsive.align-middle#table-info
+               thead 
+                    tr
+                         th STT
+                         th Đội
+                         th Cầu thủ
+                         th Loại
+                         th Thời điểm
+                         th Tùy chọn
+               tbody#match-info 
+     button.btn.btn-primary.d-flex.m-auto(type="button" id="sendBtn")  Lưu

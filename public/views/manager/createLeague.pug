@@ -1,0 +1,24 @@
+extend ../layouts/common.pug
+block head
+     title Tạo Giải Bóng Đá - Quản Lý
+block content
+     h1.text-center Tạo Giải Bóng Đá
+     if errors
+          for err in errors 
+               .alert.alert-danger.w-50.mx-auto(role='alert')= err
+
+     form.px-5.w-50.mx-auto(action="leagues", method="POST" enctype="multipart/form-data")
+          .mb-3
+               label.form-label(for='league') Tên Giải
+               input.form-control(type='text' placeholder='Giải Đấu Bóng Đá' name='name' id="league" value= body.name || "")
+          .mb-3
+               label.form-label(for='description') Mô Tả
+               textarea.form-control(rows='3' id = "description", name='description' value = body.description || "")
+          .mb-3
+               label.form-label(for='startTime') Thời Gian Bắt Đầu 
+               input.form-control(type='date' name='startTime' id="startTime" value= body.startTime)
+          .mb-3
+               label.form-label(for='thumnails') Biểu Tượng
+               input.form-control(type='file' name='logo' id="thumnails" accept="image/*")
+          .mb-3
+               input.btn.btn-primary.form-control(type="submit" value="Create")

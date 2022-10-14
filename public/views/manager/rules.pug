@@ -1,0 +1,43 @@
+extend ../layouts/common.pug
+
+block head
+     title Quy Định Giải Đấu
+
+block content
+     .rules(style='width: 80%; margin: auto;')
+          .d-flex.justify-content-between.align-items-center
+               h1#title Quy Định
+               a.d-block.btn.btn-primary(href='#create') Thêm quy định
+               
+          table.table.table-hover.table-responsive
+               thead
+                    tr
+                         th.d-none.d-lg-table-cell(scope='col' style='width: 10rem;') Quy Định
+                         th.d-none.d-lg-table-cell(scope='col') Nội Dung
+                         th
+               tbody#tbody
+     #create.create_form
+          h1.text-center Thêm Quy Định Mới
+          form.px-5.w-50.mx-auto(action='leagues' method='POST' enctype='multipart/form-data')
+               .mb-3
+                    label.form-label(for='rule') Tên quy định
+                    input#league.form-control(type='text' placeholder='Tên quy định' name='name' value='')
+               .mb-3
+                    label.form-label(for='content') Nội dung
+                    textarea#description.form-control(placeholder='Nội dung' rows='3' name='description' value='')
+               .mb-3
+                    input.btn.btn-primary.form-control(type='submit' value='Thêm quy định')
+     #edit.edit_form
+          h1.text-center Chỉnh Sửa Quy Định
+               form.px-5.w-50.mx-auto(action='leagues' method='POST' enctype='multipart/form-data')
+                    .mb-3
+                         label.form-label(for='rule') Tên quy định
+                         input#league.form-control(type='text' placeholder='Tên quy định' name='name' value='')
+                    .mb-3
+                         label.form-label(for='content') Nội dung
+                         textarea#description.form-control(placeholder='Nội dung' rows='3' name='description' value='')
+                    .mb-3
+                         input.btn.btn-primary.form-control(type='submit' value='Lưu')
+     .rules_view
+          table.table.table-responsive.text-center(style='width: 80%; margin: auto;')
+               tbody#tbody1
