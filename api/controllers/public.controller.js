@@ -6,7 +6,7 @@ const {
 	Food,
 	Voucher,
 	VirtualDisplayVoucher,
-} = require("../../models/require.model");
+} = require("../../models");
 
 module.exports = {
 	getFoods: async (req, res) => {

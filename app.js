@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 //require all model
-require("./models/require.model");
+require("./models");
 
 const path = require("path");
 
@@ -25,7 +25,10 @@ const serviceAccount = require("./food-services-1de98-firebase-adminsdk-b0y0g-92
 const apiRoute = require("./api/routers/index.route");
 const authRoute = require("./api/routers/auth.route");
 const authFERoute = require("./routers/auth.route");
+
 const { morganConfig } = require("./utils/constaints");
+const { seoConfigMiddleware } = require("./middlewares/SeoConfigMiddleware");
+const { home } = require("./controllers/home.controller");
 
 const { db_url, db_user, db_pass, db_name, SECRET_KEY, APP_NAME } = process.env;
 
@@ -62,11 +65,7 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "./views"));
 app.use(favicon("./public/images/assets/restaurant.png"));
 
-// middleware set APP_NAME
-app.use((req, res, next) => {
-	res.locals.APP_NAME = APP_NAME;
-	next();
-});
+app.use(seoConfigMiddleware);
 
 // GET USER IF AUTH OR NEXT
 app.use(userMiddleware);
@@ -76,15 +75,9 @@ app.use("/api", apiRoute);
 app.use("/auth", authRoute);
 app.use("/", authFERoute);
 
-app.get("/", (req, res) => {
-	res.render("home/index");
-});
+app.get("/", home);
 
 app.use(errorMiddleware);
-
-// app.use((req, res, next) => {
-// 	res.json({ success: false, message: "NOT_FOUND" });
-// });
 
 app.listen(PORT, () => {
 	console.log(`server run in port ${PORT}`);

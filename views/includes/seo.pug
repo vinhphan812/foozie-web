@@ -1,0 +1,21 @@
+if seo.title
+  meta(name="title" content=seo.title)
+title #{seo.title} - #{APP_NAME}
+meta(name="robots" content="noodp,index,follow")
+if seo.discreption
+  meta(name="description" content=seo.discreption)
+if seo.keywords
+  meta(name="keywords" content=seo.keywords.join(','))
+meta(name="revisit-after" content="1 days")
+meta(http-equiv="content-language" content="vi")
+meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+meta(name="google" content="nositelinkssearchbox")
+meta(property="og:title" content=seo.title ? seo.title : `${APP_NAME} - vinhphancommunity`)
+meta(property="og:site_name" content="vinhhphancommunity")
+meta(property="og:locale" content="vi")
+if seo.url
+  meta(property="og:url" content=seo.url)
+meta(property="og:type" content="website")
+
+if image
+  meta(property="og:image" content=seo.image)

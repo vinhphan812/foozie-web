@@ -1,9 +1,9 @@
 const md5 = require("md5");
 const User = require("../models/user.model");
-// const NotificationFactory = require("../../modules/notification");
 
 module.exports = {
 	loginPage: (req, res, next) => {
+		console.log(res.locals);
 		res.render("users/sign_in");
 	},
 	registerPage: (req, res, next) => {
@@ -44,15 +44,15 @@ module.exports = {
 
 		const userCreated = await User.create(user);
 
-		await NotificationFactory.createNotify(
-			{
-				title: `Chúc mừng bạn đã tạo thành công!`,
-				body: `${user.username} đã được tạo thành công! đăng nhập app để thỏa sức đặt đồ ăn!`,
-			},
-			token,
-			userCreated.id,
-			`user/${userCreated.id}`
-		);
+		// await NotificationFactory.createNotify(
+		// 	{
+		// 		title: `Chúc mừng bạn đã tạo thành công!`,
+		// 		body: `${user.username} đã được tạo thành công! đăng nhập app để thỏa sức đặt đồ ăn!`,
+		// 	},
+		// 	token,
+		// 	userCreated.id,
+		// 	`user/${userCreated.id}`
+		// );
 		res.json({
 			success: true,
 			message: "CREATE_ACCOUNT_SUCCESS",

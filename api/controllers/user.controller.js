@@ -6,7 +6,7 @@ const {
 	Voucher,
 	Store,
 	Food,
-} = require("../../models/require.model");
+} = require("../../models");
 const NotificationFactory = require("../../modules/notification");
 
 const {
