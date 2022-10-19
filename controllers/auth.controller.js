@@ -3,10 +3,11 @@ const User = require("../models/user.model");
 
 module.exports = {
 	loginPage: (req, res, next) => {
-		console.log(res.locals);
+		res.locals.seo.title = "Đăng Nhập";
 		res.render("users/sign_in");
 	},
 	registerPage: (req, res, next) => {
+		res.locals.seo.title = "Đăng Ký";
 		res.render("users/sign_up");
 	},
 	loginHandle: async (req, res, next) => {
@@ -24,7 +25,7 @@ module.exports = {
 			res.render("users/sign_in", { errors });
 		} else {
 			res.cookie("userId", userData.id, { signed: true });
-			res.redirect("/");
+			res.redirect(userData.role == "ADMIN" ? "/admin" : "/");
 		}
 	},
 
@@ -37,26 +38,19 @@ module.exports = {
 	},
 
 	signUpHandle: async (req, res, next) => {
-		const { user } = res.locals;
-		const { token } = req.body;
+		const { body, errors } = res.locals;
 
-		user.password = md5(user.password);
+		console.log(res.locals);
 
-		const userCreated = await User.create(user);
+		if (errors.length) {
+			return res.render("users/sign_up");
+		}
 
-		// await NotificationFactory.createNotify(
-		// 	{
-		// 		title: `Chúc mừng bạn đã tạo thành công!`,
-		// 		body: `${user.username} đã được tạo thành công! đăng nhập app để thỏa sức đặt đồ ăn!`,
-		// 	},
-		// 	token,
-		// 	userCreated.id,
-		// 	`user/${userCreated.id}`
-		// );
-		res.json({
-			success: true,
-			message: "CREATE_ACCOUNT_SUCCESS",
-		});
+		body.password = md5(body.password);
+
+		const userCreated = await User.create(body);
+
+		res.redirect("/sign_in");
 	},
 
 	logoutHandle: (req, res, next) => {

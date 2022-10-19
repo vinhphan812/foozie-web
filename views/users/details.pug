@@ -1,0 +1,29 @@
+extend ../layouts/common.pug
+
+block content
+     .bg-white.p-5.shadow-sm
+          .container
+               .h2.text-center Hồ sơ của tôi
+               .row.justify-content-center.my-5
+                    .rounded-circle.img-thumbnail.w-auto#edit-avatar.user-avatar(style=`background: url("${user.avatar ? user.avatar : "/public/images/assets/user.png"}")` alt=user.last_name + " " + user.first_name)
+                    input#img(type='file' name='img' accept='image/*' style="display: none;")
+                    .h2.text-center #{user.last_name + " " + user.first_name}
+                    .h4.text-center.text-muted @#{user.username}
+               .row.justify-content-center
+                    .col-md-6.container
+                         .row.mb-2
+                              .col-md-6.p-0.pe-lg-2.mb-2
+                                   input.form-control(type='text' name="last_name" placeholder="Họ" value=user?user.last_name : "")
+                              .col-md-6.p-0
+                                   input.form-control(type="text" name="first_name" placeholder="Tên" value=user?user.first_name : "")
+                         .row.mb-2
+                              input.col-md-6.form-control(type="text" name="phone" placeholder="Số điện thoại" value=user?user.phone : "")
+                         .row.mb-2
+                              .col.p-0.pe-md-2.pe-sm-0
+                                   input.form-control(type="email" name="email" placeholder="Email" value=user?user.email : "")
+                              //- if !user.isVerifyMail
+                              .col-md-3.p-0.mt-md-0.mt-2
+                                   button.btn.btn-primary.w-100 Xác thực
+
+block script 
+     script(src="/public/js/upload-avatar.js")

@@ -5,7 +5,6 @@ const {
 	forgotHandle,
 	signUpHandle,
 	logoutHandle,
-	loginAdmin,
 } = require("../controllers/auth.controller");
 const {
 	signUpValidate,

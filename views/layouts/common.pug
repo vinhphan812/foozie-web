@@ -30,11 +30,11 @@ html(lang="en")
                               if user
                                    .dropdown
                                         button#dropdownMenuButton1.btn.btn-light.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
-                                             img(src=`/public/images/rankings/${user.current_ranking.code}.png` class="user-avatar" alt=user.name)
+                                             img.user-avatar-small(src=`/public/images/rankings/${user.current_ranking.code}.png` alt=user.name)
                                              span= user.first_name + " " + user.last_name
                                         ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
                                              li
-                                                  a.dropdown-item(href='/detail') Chi tiết
+                                                  a.dropdown-item(href='/user/profile') Hồ sơ
                                              li
                                                   a.dropdown-item(href='/logout') Đăng xuất
                               else 

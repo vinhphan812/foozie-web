@@ -7,7 +7,6 @@ const {
 	Store,
 	Food,
 } = require("../../models");
-const NotificationFactory = require("../../modules/notification");
 
 const {
 	TAKE_SUCCESS_VOUCHER,
@@ -157,8 +156,6 @@ module.exports = {
 		//TODO: create order success up score => up ranking
 		if (success) {
 			user.upScore(total);
-
-			NotificationFactory.forOrder(user.id, order_id, total, token);
 		}
 
 		res.json({ success, message });
@@ -222,16 +219,6 @@ module.exports = {
 					user_id: user.id,
 					voucher_id: id,
 				});
-
-				await NotificationFactory.createNotify(
-					{
-						title: TAKE_SUCCESS_VOUCHER,
-						body: MAKE_BODY_MESSAGE_TAKE_VOUCHER(voucher),
-					},
-					token,
-					user.id,
-					TAKE_VOUCHER_HREF(id)
-				);
 			}
 
 			res.json({
@@ -269,5 +256,22 @@ module.exports = {
 		const data = await Store.getCart(userId);
 
 		res.json({ success: true, data });
+	},
+	uploadAvatar: async (req, res) => {
+		const { id } = res.locals.user;
+		const avatar = "/" + req.file.path.replaceAll("\\", "/");
+
+		if (!avatar)
+			return res.json({
+				success: false,
+				message: "AVATAR_NOT_EXISTED",
+			});
+
+		if (!id)
+			return res.json({ success: false, message: "NOT_FOUND_USER" });
+
+		const data = await User.updateUser(id, { avatar });
+
+		res.json({ success: true, message: "UPDATE_AVATAR_SUCCESS", data });
 	},
 };

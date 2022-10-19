@@ -1,31 +1,37 @@
 extend ../layouts/common.pug
 
-block head 
-     title Sign Up Account - #{APP_NAME}
 block content
-     form(action="/sign_in" method="POST" id="login").bg-white.p-5.shadow-sm
+     form(action="/sign_up" method="POST" id="sign_up").bg-white.p-5.shadow-sm
           if errors && errors.length
                each val in errors
-                    .alert.alert-danger= val
+                    .alert.alert-danger.mx-5= val
           .container
                .h2.text-center Đăng ký tài khoản
                .row.justify-content-center
                     .col-md-6.container
                          .row.mb-2
                               .col-md-6.p-0.pe-2
-                                   input.form-control(type='text' placeholder="Họ")
+                                   input.form-control(type='text' name="last_name" placeholder="Họ" value=body?body.last_name : "")
                               .col-md-6.p-0
-                                   input.form-control(type="text" name="lastname" placeholder="Tên")
+                                   input.form-control(type="text" name="first_name" placeholder="Tên" value=body?body.first_name : "")
                          .row.mb-2
-                              input.col-md-6.form-control(type="text" name="phone" placeholder="Số điện thoại")
+                              .col-md-8.p-0.pe-2
+                                   input.form-control(type="text" name="phone" placeholder="Số điện thoại" value=body?body.phone : "")
+                              .col-md-4.p-0.d-flex.align-items-center
+                                   .form-check.form-check-inline
+                                        input.form-check-input(type="radio" id="male" name="gender" value="male")
+                                        label.form-check-label(for="female") Nam 
+                                   .form-check.form-check-inline
+                                        input.form-check-input(type="radio" id="female" name="gender" value="female")
+                                        label.form-check-label(for="female") Nữ
                          .row.mb-2
-                              input.col-md-6.form-control(type="email" name="email" placeholder="Email")
+                              input.col-md-6.form-control(type="email" name="email" placeholder="Email" value=body?body.email : "")
                          .row.mb-2
-                              input.col-md-6.form-control(type="text" name="username" placeholder="Tên đăng nhập")
+                              input.col-md-6.form-control(type="text" name="username" placeholder="Tên đăng nhập" value=body?body.username : "")
                          .row.mb-2
-                              input.col-md-6.form-control(type='password' placeholder="Mật khẩu")
+                              input.col-md-6.form-control(type='password' name="password" placeholder="Mật khẩu" value=body?body.password : "")
                          .row.mb-2
-                              input.col-md-6.form-control(type='password' placeholder="Xác nhận mật khẩu")
+                              input.col-md-6.form-control(type='password' name="passwordConfirm" placeholder="Xác nhận mật khẩu" value=body?body.passwordConfirm : "")
                               .form-text 
                                    span Bạn đã có tài khoản? 
                                    a(href="/sign_in") đăng nhập

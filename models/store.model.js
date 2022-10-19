@@ -14,8 +14,8 @@ const StoreSchema = new Schema(
 );
 
 StoreSchema.static({
-	createCart: async function (_id) {
-		return this.create({ _id, data: {} });
+	createCart: async function () {
+		return this.create({ data: {} });
 	},
 	addCart: async function (userId, food_id, type = "INCREASEMENT") {
 		let store = await this.findOne({ _id: userId });

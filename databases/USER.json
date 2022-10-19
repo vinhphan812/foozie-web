@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "627686a4e934e37205cca785"
+  },
+  "username": "vinhphan812",
+  "password": "25d55ad283aa400af464c76d713c07ad",
+  "email": "vinhphan812@gmail.com",
+  "phone": "0335499633",
+  "first_name": "Phan Thanh",
+  "last_name": "Vinh",
+  "avatar": "",
+  "current_ranking": {
+    "$oid": "6220f056e746d247310976e4"
+  },
+  "score": 0,
+  "isVerifyMail": false,
+  "created_at": {
+    "$date": {
+      "$numberLong": "1651934884929"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1651934884929"
+    }
+  }
+}]

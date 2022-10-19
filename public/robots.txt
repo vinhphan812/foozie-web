@@ -1,0 +1,11 @@
+User-agent: *
+
+allow: *.js
+allow: *.css
+allow: *.svg
+allow: /*.jpg$
+allow: /*.jpeg$
+allow: /*.gif$
+allow: /*.png$
+
+Sitemap: https://vinhhphancommunity.xyz/sitemap.xml

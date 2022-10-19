@@ -1,4 +1,5 @@
 const express = require("express");
+const { upload } = require("../../configs/uploadFile");
 const { changePassword } = require("../controllers/user.controller");
 
 const ctrler = require("../controllers/user.controller");
@@ -7,6 +8,7 @@ const router = express.Router();
 
 //{host}/api/user/
 router.route("/").get(ctrler.getMe).put(ctrler.updateMe);
+router.post("/upload", upload.single("avatar"), ctrler.uploadAvatar);
 
 router.post("/change-password", changePassword);
 
