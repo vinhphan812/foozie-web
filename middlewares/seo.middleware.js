@@ -1,4 +1,4 @@
-const { APP_NAME } = process.env;
+const { APP_NAME, GOOGLE_SEO_VERIFICATION } = process.env;
 const Branch = require("../models/branch.model");
 const User = require("../models/user.model");
 
@@ -20,6 +20,7 @@ module.exports = {
 
 		// init seo config object saving to locals response storage
 		res.locals.seo = {
+			googleSiteVerification: GOOGLE_SEO_VERIFICATION,
 			title: "",
 			description: "",
 			keywords: [],

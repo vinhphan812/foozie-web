@@ -1,4 +1,4 @@
-const express = require("express");
+const { Router } = require("express");
 
 const {
 	loginHandle,
@@ -13,7 +13,7 @@ const {
 	forgotValidate,
 } = require("../validations/auth.validation");
 
-const router = express.Router();
+const router = Router();
 
 router.route("/sign_up").get(registerPage).post(signUpValidate, signUpHandle);
 
