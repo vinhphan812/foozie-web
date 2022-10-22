@@ -43,7 +43,7 @@ module.exports = {
 			res.json({ success: false, message });
 		}
 	},
-	getBranchs: async (req, res) => {
+	getBranches: async (req, res) => {
 		const data = await Branch.find(
 			{},
 			ignoreModel(["created_at", "updated_at"])

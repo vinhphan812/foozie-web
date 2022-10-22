@@ -11,7 +11,7 @@ const userSchema = new Schema(
 		email: String,
 		phone: String,
 		first_name: String,
-		gender: { type: String, enum: ["male", "female"] },
+		gender: { type: String, enum: ["male", "female"], default: "male" },
 		last_name: String,
 		isVerifyMail: { type: Boolean, default: false },
 		avatar: { type: String, default: "" },
@@ -23,7 +23,7 @@ const userSchema = new Schema(
 		role: {
 			type: String,
 			default: "CUSTOMER",
-			enum: ["CUSTOMER", "ADMIN"],
+			enum: ["CUSTOMER", "MANAGER", "ADMIN"],
 		},
 		score: { type: Number, default: 0 },
 	},

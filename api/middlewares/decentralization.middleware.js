@@ -1,6 +1,6 @@
 const User = require("../../models/user.model");
 
-const lvlPerms = { ADMIN: 3, manager: 2, CUSTOMER: 1 };
+const { PERMISSIONS, ROLE, MENU_BY_ROLE } = require("../../utils/role.enum");
 
 module.exports = {
 	decentralization: (perms) => {
@@ -8,7 +8,9 @@ module.exports = {
 			// if (req.method == "GET") return next();
 
 			const userId = req.signedCookies.userId;
-			let userPerms = "CUSTOMER";
+
+			// default role is a CUSTOMER
+			let userPerms = ROLE.CUSTOMER;
 
 			if (userId)
 				userPerms = (
@@ -18,8 +20,10 @@ module.exports = {
 				).role;
 			else return res.redirect("/sign_in");
 
-			if (lvlPerms[userPerms] < lvlPerms[perms])
+			if (PERMISSIONS[userPerms] < PERMISSIONS[perms || ROLE.CUSTOMER])
 				return res.status(403).render("error/permission");
+
+			res.locals.role = userPerms;
 
 			next();
 		};

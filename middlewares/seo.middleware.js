@@ -1,6 +1,7 @@
 const { APP_NAME, GOOGLE_SEO_VERIFICATION } = process.env;
 const Branch = require("../models/branch.model");
 const User = require("../models/user.model");
+const { MENU_BY_ROLE } = require("../utils/role.enum");
 
 module.exports = {
 	seoConfigMiddleware: async (req, res, next) => {
@@ -10,6 +11,7 @@ module.exports = {
 		if (userId) {
 			const user = await User.get(userId);
 
+			res.locals.menu = MENU_BY_ROLE[user.role];
 			res.locals.user = user;
 			res.locals.userId = userId;
 		}
@@ -29,7 +31,7 @@ module.exports = {
 			image: "",
 		};
 
-		res.locals.branchs = await Branch.find();
+		res.locals.branches = await Branch.find();
 		// saving path for check
 		res.locals.path = req.url;
 		// saving APP_NAME
