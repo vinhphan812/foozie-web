@@ -26,6 +26,7 @@ const userSchema = new Schema(
 			enum: ["CUSTOMER", "MANAGER", "ADMIN"],
 		},
 		score: { type: Number, default: 0 },
+		is_delete: { type: Boolean, default: false },
 	},
 	SCHEMA_OPTION
 );

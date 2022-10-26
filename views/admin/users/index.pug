@@ -1,7 +1,7 @@
 extend ../../layouts/common.pug
 
 block content
-     a.btn.btn-primary(href="/admin/users/create") 
+     a.btn.btn-primary.my-2(href="/admin/users/create") 
           i.bi.bi-plus.me-2
           span Tạo 
      table.table
@@ -15,11 +15,13 @@ block content
                     th(scope="col") 
           tbody
                each val, index in users
-                    tr 
+                    tr(user-id=val.id)
                          td= index+1
                          td= val.last_name + " " + val.first_name
                          td= val.email
                          td.d-none.d-md-table-cell= val.phone
                          td.d-none.d-sm-table-cell= val.role
                          td
-                              a(href="/admin/users/" + val.id +"/update") chỉnh sửa
+                              a.me-2(href="/admin/users/" + val.id +"/update") chỉnh sửa
+                              if user.id != val.id
+                                   button.btn.btn-link.delete.bi.bi-trash.text-danger

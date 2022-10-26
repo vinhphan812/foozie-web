@@ -7,9 +7,15 @@ const ROLE = {
 const PERMISSIONS = { ADMIN: 3, MANAGER: 2, CUSTOMER: 1 };
 
 const MENU_BY_ROLE = {
-	ADMIN: [{ name: "Dashboard", link: "/admin" }],
+	ADMIN: [
+		{ name: "Tổng Quan", link: "/admin" },
+		{ name: "Chi Nhánh", link: "/admin/branches" },
+		{ name: "Người Dùng", link: "/admin/users" },
+		{ name: "Thực đơn", link: "/admin/menu" },
+		{ name: "Đơn Hàng", link: "/admin/orders" },
+	],
 	CUSTOMER: [],
-	MANAGER: [],
+	MANAGER: [{ name: "Dashboard", link: "/admin" }],
 };
 
 module.exports = { ROLE, PERMISSIONS, MENU_BY_ROLE };

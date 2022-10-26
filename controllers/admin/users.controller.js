@@ -5,9 +5,9 @@ const md5 = require("md5");
 module.exports = {
 	managerUsers: async (req, res, next) => {
 		res.locals.seo.title = "Quản Lý Người Dùng";
+		res.locals.scripts = ["/public/js/deleteUser.js"];
 
-		const users = await User.find({});
-		console.log(users);
+		const users = await User.find({ is_delete: false });
 
 		res.locals.users = users;
 
@@ -53,8 +53,6 @@ module.exports = {
 	updateUser: async (req, res, next) => {
 		const { password, ...body } = res.locals.body;
 		const { id } = req.params;
-
-		console.log(body);
 
 		await User.updateOne({ _id: id }, { $set: body });
 

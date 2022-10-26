@@ -5,12 +5,11 @@ module.exports = {
 		res.locals.seo.title = "Trang Chủ";
 		res.locals.seo.description = "";
 		res.locals.seo.keywords = [
+			"Foozie",
 			"Foozie Home",
 			"Foozie Foods",
 			"Food Delivery",
 		];
-
-		console.log(await Food.find().limit(5));
 
 		res.render("home/index");
 		res.end();

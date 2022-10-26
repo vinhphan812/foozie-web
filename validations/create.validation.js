@@ -1,4 +1,5 @@
 const { User } = require("../models/index");
+const { ROLE } = require("../utils/role.enum");
 
 module.exports = {
 	createUserValidation: async (req, res, next) => {
@@ -54,5 +55,35 @@ module.exports = {
 
 		next();
 	},
-	createBranch: async (req, res, next) => {},
+	createBranchValidation: async (req, res, next) => {
+		const { name, address, phone, manager } = req.body;
+
+		const errors = [];
+
+		if (!name || !address || !phone)
+			errors.push("Vui lòng diền đủ thông tin...!");
+
+		if (phone.length != 10)
+			errors.push("Định dạng số điện thoại không đúng...!");
+
+		res.locals.body = {
+			name,
+			address,
+			phone,
+		};
+
+		if (manager) {
+			const managerData = await User.findOne({ _id: manager });
+			if (!managerData) errors.push("Không tìm thấy người quản lý");
+			else if (managerData.role != ROLE.MANAGER)
+				errors.push("Người quản lý không có quyền quản lý");
+			else {
+				res.locals.body.manager = manager;
+			}
+		}
+
+		res.locals.errors = errors;
+
+		next();
+	},
 };

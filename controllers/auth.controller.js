@@ -19,9 +19,8 @@ module.exports = {
 		const userData = await User.findOne({
 			$or: [{ username: user }, { email: user }, { phone: user }],
 			password: md5(pass),
+			is_delete: false,
 		});
-
-		console.log(userData);
 
 		if (!userData) {
 			errors.push("Tài khoản, mật khẩu bạn vừa nhập chưa đúng");
@@ -43,8 +42,6 @@ module.exports = {
 	signUpHandle: async (req, res, next) => {
 		res.locals.seo.title = "Đăng Ký";
 		const { body, errors } = res.locals;
-
-		console.log(res.locals);
 
 		if (errors.length) {
 			return res.render("users/sign_up");
