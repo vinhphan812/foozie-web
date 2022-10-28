@@ -1,6 +1,22 @@
 const mongoose = require("mongoose");
+const redis = require("redis");
 
-const { db_url, db_user, db_pass, db_name } = process.env;
+const { db_url, db_user, db_pass, db_name, redisURL, redisKey } = process.env;
+
+const redisClient = redis.createClient({
+	url: redisURL,
+	password: redisKey,
+});
+
+redisClient.on("error", (err) => {
+	console.log("REDIS ERROR - " + err);
+});
+
+redisClient.on("connect", (stream) => {
+	console.log("Redis CONNECTED...");
+});
+
+redisClient.connect();
 
 module.exports = {
 	initDatabase: () => {
@@ -12,4 +28,5 @@ module.exports = {
 				dbName: db_name,
 			});
 	},
+	redisClient,
 };

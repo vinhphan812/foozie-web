@@ -1,4 +1,5 @@
 const { User, Branch } = require("../../models/index");
+const { updateBranches } = require("../../utils/redis");
 const { ROLE } = require("../../utils/role.enum");
 
 module.exports = {
@@ -44,6 +45,8 @@ module.exports = {
 
 		await Branch.create(body);
 
+		updateBranches();
+
 		res.redirect("/admin/branches/");
 	},
 	updateBranch: async (req, res, next) => {
@@ -52,7 +55,9 @@ module.exports = {
 
 		if (errors.length) return res.render("admin/branches/branch");
 
-		await Branch.update({ _id: id }, { $set: body });
+		await Branch.updateOne({ _id: id }, { $set: body });
+
+		updateBranches();
 
 		res.redirect("/admin/branches/");
 	},
