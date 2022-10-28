@@ -9,7 +9,7 @@ block content
           thead
                tr
                     th(scope="col") #
-                    th(scope="col") Hình ảnh
+                    //- th(scope="col") Hình ảnh
                     th(scope="col") Tên món
                     th(scope="col") Loại
                     th.d-none.d-md-table-cell(scope="col") Mô tả
@@ -19,8 +19,8 @@ block content
                each val, index in foods
                     tr(branch-id=val.id)
                          td= index+1
-                         td
-                              image(src="/public" + val.thumbnail width=200 alt=val.name)
+                         //- td
+                         //-      image(src="/public" + val.thumbnail width=200 alt=val.name)
                          td= val.name
                          td= val.type.name
                          td.d-none.d-md-table-cell= val.description
