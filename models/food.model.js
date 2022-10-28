@@ -13,7 +13,7 @@ const FoodSchema = new Schema(
 		description: String,
 		thumbnail: String,
 		price: Number,
-		type: [{ type: Schema.Types.ObjectId, ref: "FOOD_TYPE" }],
+		type: { type: Schema.Types.ObjectId, ref: "FOOD_TYPE" },
 		is_delete: Boolean,
 		code: String,
 		is_stock: Boolean,

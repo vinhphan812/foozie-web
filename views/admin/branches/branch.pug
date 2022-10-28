@@ -6,7 +6,7 @@ block content
                if errors && errors.length
                     each val in errors
                          .alert.alert-danger.mx-5= val
-               .h2.text-center Tạo Chi Nhánh
+               .h2.text-center= isCreate ? "Tạo Chi Nhánh" : "Chỉnh Sửa Chi Nhánh"
                .mb-3
                     label.form-label(for='name') Tên chi nhánh
                     input#name.form-control(type='text' name="name" placeholder="Tên chi nhánh" value= body? body.name : "")

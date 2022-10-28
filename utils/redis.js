@@ -1,5 +1,6 @@
 const BRANCHES_KEY = "BRANCHES";
-const { Branch } = require("../models/index");
+const FOOD_TYPE_KEY = "FOOD_TYPE";
+const { Branch, FoodType } = require("../models/index");
 const { redisClient } = require("../configs/config");
 
 async function setCache(key, data) {
@@ -11,6 +12,17 @@ async function getCache(key) {
 	return JSON.parse(data);
 }
 
+async function updateFoodType() {
+	const data = await FoodType.find({});
+	setCache(FOOD_TYPE_KEY, data);
+	return data;
+}
+async function getFoodType() {
+	let data = await getCache(FOOD_TYPE_KEY);
+	if (!data) data = updateFoodType();
+	return data;
+}
+
 module.exports = {
 	updateBranches: async () => {
 		const branches = await Branch.find({});
@@ -20,6 +32,8 @@ module.exports = {
 	getBranches: async () => {
 		return await getCache(BRANCHES_KEY);
 	},
+	getFoodType,
+	updateFoodType,
 	getCache,
 	setCache,
 	BRANCHES_KEY,

@@ -22,9 +22,9 @@ block content
                          td
                               image(src="/public" + val.thumbnail width=200 alt=val.name)
                          td= val.name
-                         td= val.type.map(e => e.name)
+                         td= val.type.name
                          td.d-none.d-md-table-cell= val.description
                          td= val.price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})
                          td
-                              a(href="/admin/branches/" + val.id + "/update") chỉnh sửa
+                              a(href="/admin/menu/" + val.id + "/update") chỉnh sửa
                               button.btn.btn-link.delete.bi.bi-trash.text-danger

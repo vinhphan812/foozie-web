@@ -1,4 +1,4 @@
-const { User } = require("../models/index");
+const { User, FoodType } = require("../models/index");
 const { ROLE } = require("../utils/role.enum");
 
 module.exports = {
@@ -81,6 +81,28 @@ module.exports = {
 				res.locals.body.manager = manager;
 			}
 		}
+
+		res.locals.errors = errors;
+
+		next();
+	},
+	createFoodValidation: async (req, res, next) => {
+		const { name, price, description, type } = req.body;
+
+		const errors = [];
+
+		if (!name || !price) errors.push("Vui lòng diền đủ thông tin...!");
+
+		const typeData = await FoodType.findOne({ _id: type });
+
+		if (!typeData) errors.push("Loại món ăn không khả dụng...!");
+
+		res.locals.body = {
+			name,
+			price,
+			description: description || "",
+			type,
+		};
 
 		res.locals.errors = errors;
 
