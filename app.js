@@ -17,7 +17,6 @@ const { errorMiddleware } = require("./middlewares/error.middleware");
 // import route
 const apiRoute = require("./api/routers/index.route");
 const indexRoute = require("./routes/index.route");
-
 // import middleware
 const { morganConfig } = require("./utils/constaints");
 const { seoConfigMiddleware } = require("./middlewares/seo.middleware");

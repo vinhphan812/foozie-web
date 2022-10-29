@@ -1,0 +1,50 @@
+extend ../layouts/common.pug
+block script
+     script.
+          document.forms[0].onsubmit= () => {
+               const forms = document.forms[0];
+
+               const type = []
+               forms.type.forEach((e) => {
+                    if(e.checked)
+                         type.push(e.value)
+               });
+
+               window.location.href = `/search?q=${forms['q'].value}&type=${type}`
+               return false;
+          }
+
+block content 
+     form.d-flex.justify-content-center.align-items-center.flex-column
+          .search-bar.mb-4.w-100
+               .input-group.mb-3
+                    input#input-search.form-control(type='text' name="q" placeholder="Gà rán, pizza..." value=body.q)
+                    input(type="submit" value="Tìm kiếm")#btn-search.btn.btn-primary
+          if body.q
+               .h4.text-center #{foods.length == 0 ? "Không tìm thấy" : `Tìm thấy ${foods.length}`} kết quả cho từ khóa "#{body.q}"
+          .body.d-flex
+               .col-2.pe-1
+                    .list-group
+                         .h5 Tùy chọn tìm kiếm
+                         each valTypes in foodTypes
+                              .form-check.my-2
+                                   input.form-check-input(type='checkbox' name="type" id=valTypes.code value=valTypes.code checked=body ? body.type.includes(valTypes.code) : false)
+                                   label.badge.fs-6.bg-primary.form-check-label(for=valTypes.code style="width:130px;")= valTypes.name
+               .col-10.ps-1
+                    .container.food
+                         .row.row-cols-3
+                              each valFoods in foods
+                                   .col
+                                        .card(style='margin-bottom:10px;')
+                                             img.card-img-top(src='/public'+valFoods.thumbnail alt='' style="height: 200px;")
+                                             .card-body
+                                                  h5.card-title=valFoods.name
+                                                  p.card-text=valFoods.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
+                                                  a.btn.btn-primary(href='#') Đặt ngay
+
+
+
+
+
+
+
