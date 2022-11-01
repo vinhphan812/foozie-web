@@ -38,6 +38,7 @@ block content
                                         .card(style='margin-bottom:10px;')
                                              img.card-img-top(src='/public'+valFoods.thumbnail alt='' style="height: 200px;")
                                              .card-body
+                                                  a.stretched-link(href=`/foods/${valFoods._id}`)
                                                   h5.card-title=valFoods.name
                                                   p.card-text=valFoods.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
                                                   a.btn.btn-primary(href='#') Đặt ngay

@@ -1,9 +1,9 @@
 const { Router } = require("express");
 
-const { detailFood, searchFood } = require("../controllers/food.controller");
+const { detailFood } = require("../controllers/food.controller");
 const IdValidation = require("../validations/id.validation");
 
 const router = Router();
 
-router.get("/:id", IdValidation, detailFood);
+router.get("/:idProduct", detailFood);
 module.exports = router;
