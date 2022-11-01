@@ -5,10 +5,10 @@ module.exports = {
      trailingComma: "es5",
      overrides: [
           {
-               files: "*.css",
+               files: '*.css',
                options: {
                     tabWidth: 4,
                },
           },
      ],
-};
+}
