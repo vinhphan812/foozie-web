@@ -841,21 +841,6 @@
      },
      {
           "_id": {
-               "$oid": "62263546c44f38a0f56e7399"
-          },
-          "type": {
-               "$oid": "6221b408e746d247310976f6"
-          },
-          "name": "Pizza bánh xèo Nhật size vừa",
-          "description": "",
-          "thumbnail": "/public/uploads/foods/pizza_banh_xeo_nhat.jpg",
-          "price": 189000,
-          "is_delete": false,
-          "avegage": 0,
-          "sold": 0
-     },
-     {
-          "_id": {
                "$oid": "62263546c44f38a0f56e739a"
           },
           "type": {

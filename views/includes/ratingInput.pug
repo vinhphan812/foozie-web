@@ -1,0 +1,32 @@
+form.d-flex(method='POST' action='/foods/' + food._id + "/comment")
+                        .input-group
+                            .input-group-text.justify-content-center
+                                .rating
+                                    label
+                                        input(type='radio' name='stars' value='1')
+                                        span.icon &starf;
+                                    label
+                                        input(type='radio' name='stars' value='2')
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                    label
+                                        input(type='radio' name='stars' value='3')
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                    label
+                                        input(type='radio' name='stars' value='4')
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                    label
+                                        input(type='radio' name='stars' value='5')
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                        span.icon &starf;
+                                        span.icon &starf;
+
+                            input.form-control(type='text' placeholder=`Hãy viết đánh giá cho "${food.name}"...` aria-label='comment')
+                            button.btn.btn-outline-success(type='submit') Đăng

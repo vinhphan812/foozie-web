@@ -4,9 +4,21 @@ block script
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" referrerpolicy="no-referrer")
     script.
         window.onload = () => {
-            $('.slick').slick({slidesToShow: 4, slidesToScroll: 4, draggable: true,
-                //- centerPadding: "100px",
-                focusOnSelect: true})
+            $('.slick').slick({slidesToShow: 4, slidesToScroll: 4, draggable: true, autoplay: true, focusOnSelect: true, infinite: true, responsive: [
+                {
+                breakpoint: 760,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            }, {
+                breakpoint: 980,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3 
+                }
+            }
+            ]})
         }
         var quantity = 0;
             const minus=(e)=> {
@@ -23,40 +35,69 @@ block script
             }
 block head
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css")
+    link(rel="stylesheet" type="text/css" href="/public/css/rating.css")
 block content
-    form.d-flex.justify-content-center.align-items-center.flex-column
-    .body.d-flex.mt-3
-        .col-5.justify-content-center.align-items-center.d-flex
-            img.img-fluid.d-flex(src='/public'+food.thumbnail alt='Responsive image' style="height: 20rem;" )
-        .col-1
-        .col-6.justify-content-center.align-items-center.flex-column
-            h1.text-uppercase=food.name
-            title.d-flex Mã loại món ăn:
-            h5=food.type.name
-            title.d-flex Mô tả món ăn:
-            h5= !food.description ? 'Hiện tại món ăn này chưa có mô tả' : food.description
-            title.d-flex Số lượng:
-            .input-group.w-50.my-2
-                span.input-group-btn
-                    button.minus.btn.btn-primary.btn-number(type='button' data-type='minus' data-field='' onclick='minus()')
-                        span -
-                input#quantity.form-control.input-number(type='text' name='quantity' value='0' min='1')
-                span.input-group-btn
-                    button.plus.btn.btn-primary.btn-number(type='button' data-type='plus' data-field='' onclick='plus()')
-                        span +
-            title.d-flex Giá:
-            h5= food.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
-            button.btn.btn-primary(type='button') Mua ngay
-            button.btn.btn-danger.mx-2(type='button') Thêm vào giỏ hàng
+    .bg-white.shadow.px-3.py-5
+        .row.justify-content-evenly
+            .col-md-5.justify-content-center.align-items-center.d-flex
+                a(type="button" data-bs-toggle="modal" data-bs-target="#image-modal")
+                    img.img-fluid.d-flex.rounded.img-thumbnail.shadow(src=food.thumbnail alt=food.name style="height: 20rem;" )
+            .col-md-6.justify-content-center.align-items-center.flex-column.py-2.px-3.px-lg-0
+                h1.pt-5.pt-md-0.text-uppercase=food.name
+                p.h3.bg-light.px-3.py-2.shadow-sm= food.price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})
+                .d-flex.align-items-center
+                    span.h4.pe-2 Loại
+                    a.badge.bg-primary.px-3.py-2.text-decoration-none(href="/search?type=" + food.type.code)= food.type.name
+                .mb-2
+                    p.h3.px-3.py-2 Mô tả món ăn
+                    span= !food.description ? 'Hiện tại món ăn này chưa có mô tả' : food.description
+                hr
+                //- .bg-light.px-3.py-2.shadow-sm.d-flex.align-items-center
+                .bg-light.px-3.py-2.shadow-sm
+                    .d-flex.align-items-center
+                        span.fs-6.px-2 Số lượng
+                        .input-group.my-2.w-auto
+                            button.minus.btn.btn-outline-secondary(type='button' data-type='minus' data-field='' onclick='minus()') - 
+                            input#quantity.btn.btn-outline-secondary.text-center(type='text' name='quantity' value='0' min='1' disabled=true style="width:50px")
+                            button.plus.btn.btn-outline-secondary(type='button' data-type='plus' data-field='' onclick='plus()') +
+                    .mt-3
+                        button.btn.btn-outline-primary.me-2.rounded-0(type='button' data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng") 
+                            i.bi.bi-cart-plus-fill.px-2
+                            //- span Thêm vào giỏ hàng
+                        button.btn.btn-primary.rounded-0(type='button') Mua ngay
+        .mx-5
+            .img-thumbnail.min-3
+                .h3.mx-2 Đánh Giá
+                hr
+                if comments.length
+                    ul
+                        li hi
+                else 
+                    .d-flex.flex-column.justify-content-center.align-items-center.min-3.text-muted
+                        .bi.bi-list-stars.fs-1
+                        .h5.text-center Chưa có đánh giá nào
+
+            if user
+                    include ../includes/ratingInput.pug
+
     .similar-foods.mt-3
         h2 Các món ăn cùng loại
+        hr
         div.slick.bg-light(data-slick='{"slidesToShow": 4, "slidesToScroll": 4}')
             each valSimilar in similar
                 .px-2
                     .card(style='margin-bottom:10px;')
-                        img.card-img-top(src='/public'+valSimilar.thumbnail alt='' style="height: 200px;")
+                        img.card-img-top(src=valSimilar.thumbnail alt=valSimilar.name style="height: 200px;")
                         .card-body
-                            a.stretched-link(href=`/foods/${valSimilar._id}`)
-                            h5.card-title=valSimilar.name
+                            a.link-secondary.text-decoration-none(href=`/foods/${valSimilar._id}`)
+                                h5.card-title.text-truncate=valSimilar.name
                             p.card-text=valSimilar.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
                             a.btn.btn-primary(href='#') Đặt ngay
+    .modal#image-modal
+        .modal-dialog.modal-fullscreen-sm-down
+            .modal-content
+                .modal-header
+                    h5.modal-title= food.name
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body.d-flex.justify-content-center
+                    img(src=food.thumbnail)

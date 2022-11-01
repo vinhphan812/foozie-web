@@ -2,7 +2,8 @@ const { Food, FoodType } = require("../models/index");
 module.exports = {
      homePage: async (req, res, next) => {
           res.locals.seo.title = "Trang Chủ";
-          res.locals.seo.description = "";
+          res.locals.seo.description =
+               "Foozie Foods là trang bán và giao đồ ăn online cho tất cả mọi người nhằm phục vụ nhu cầu ăn uống, thuận tiện.";
           res.locals.seo.keywords = [
                "Foozie Home",
                "Foozie Foods",

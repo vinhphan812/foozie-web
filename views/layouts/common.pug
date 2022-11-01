@@ -27,28 +27,29 @@ html(lang="en")
                                    for item in menu 
                                         li.nav-item
                                              a.nav-link.active(aria-current='page' href=item.link)= item.name
-                         if !isLogin
-                              if user
-                                   .dropdown
-                                        button#dropdownMenuButton1.btn.btn-light.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
-                                             img.user-avatar-small(src=user.avatar ? user.avatar : `/public/images/rankings/${user.current_ranking.code.toLowerCase()}.png` alt=user.name)
-                                             span= user.last_name + " " + user.first_name
-                                        ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
-                                             li
-                                                  a.dropdown-item(href='/user/profile') Hồ sơ
-                                             li
-                                                  a.dropdown-item(href='/logout') Đăng xuất
-                              else 
-                                   if !listNotDisplaySignNav.includes(path)
-                                        .px-2
-                                             a.text-light(href="/sign_in") Đăng nhập
-                                             span.px-2 /
-                                             a.text-light(href="/sign_up") Đăng ký
-                         if role == "CUSTOMER" || !role
-                              button(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasRight' aria-controls='offcanvasRight').btn.btn-light.mx-2.position-relative
-                                   i.bi.bi-bag
-                                   if product && product.length
-                                        span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger= product.length
+                         .d-flex.mb-lg-0.mb-2
+                              if !isLogin
+                                   if user
+                                        .dropdown
+                                             button#dropdownMenuButton1.btn.btn-light.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                                                  img.user-avatar-small(src=user.avatar ? user.avatar : `/public/images/rankings/${user.current_ranking.code.toLowerCase()}.png` alt=user.name)
+                                                  span= user.last_name + " " + user.first_name
+                                             ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
+                                                  li
+                                                       a.dropdown-item(href='/user/profile') Hồ sơ
+                                                  li
+                                                       a.dropdown-item(href='/logout') Đăng xuất
+                                   else 
+                                        if !listNotDisplaySignNav.includes(path)
+                                             .px-2.d-flex.align-items-center
+                                                  a.text-light(href="/sign_in") Đăng nhập
+                                                  span.px-2 /
+                                                  a.text-light(href="/sign_up") Đăng ký
+                              if role == "CUSTOMER" || !role
+                                   button(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasRight' aria-controls='offcanvasRight').btn.btn-light.mx-2.position-relative
+                                        i.bi.bi-bag
+                                        if product && product.length
+                                             span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger= product.length
           main.container.py-5
                block content
                #offcanvasRight.offcanvas.offcanvas-end(tabindex='-1' aria-labelledby='offcanvasRightLabel')
@@ -61,7 +62,7 @@ html(lang="en")
           footer.dark
                .container.px-5.pt-5
                     .row.justify-content-center
-                         .col-sm-4
+                         .col-md-4
                               h5 Về #{APP_NAME.split(" ")[0]}
                               ul
                                    li
@@ -72,7 +73,7 @@ html(lang="en")
                                         a(href='/contact') Chính sách bảo mật
                                    li
                                         a(href='/contact') Vận chuyển
-                         .col-sm-4
+                         .col-md-4
                               h5 Hổ Trợ Chăm Sóc Khách Hàng
                               ul
                                    li
@@ -81,7 +82,7 @@ html(lang="en")
                                         a(href='/help') hổ trợ báo cáo
                                    li
                                         a(href='/forums') Forums
-                         .col-sm-4
+                         .col-md-4
                               h5 Chi Nhánh
                               ul
                                    each val in branches

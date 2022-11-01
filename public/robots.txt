@@ -7,5 +7,6 @@ allow: /*.jpg$
 allow: /*.jpeg$
 allow: /*.gif$
 allow: /*.png$
+allow: /foods/*
 
 Sitemap: https://vinhphancommunity.xyz/sitemap.xml

@@ -22,11 +22,14 @@ module.exports = {
           res.render("admin/menu/food");
      },
      updateFood: async (req, res, next) => {
+          const { id } = req.params;
           const { body, errors } = res.locals;
           res.locals.seo.title = "Chỉnh sửa " + body.name;
           res.locals.types = await getFoodType();
 
           if (errors.length) return res.render("admin/menu/food");
+
+          await Food.updateOne({ _id: id }, { $set: body });
 
           res.redirect("/admin/menu/");
      },
