@@ -14,11 +14,15 @@ module.exports = {
           res.json({ success: true, message: "Branch deleted successfully" });
      },
      uploadFoodImageHandle: async (req, res, next) => {
-          const { id } = res.locals;
-          const thumbnail = "/" + req.file.path.replaceAll("\\", "/");
+          const { id } = req.params;
+          const thumbnail = "/" + req.file.path.split("\\").join("/");
 
           await Food.updateOne({ _id: id }, { $set: { thumbnail } });
 
-          res.json({ success: true, message: "Upload Image Food Success" });
+          res.json({
+               success: true,
+               message: "Upload Image Food Success",
+               data: thumbnail,
+          });
      },
 };

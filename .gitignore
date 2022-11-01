@@ -2,3 +2,4 @@
 /.vscode/
 .env
 food-services*.json
+/public/uploads/

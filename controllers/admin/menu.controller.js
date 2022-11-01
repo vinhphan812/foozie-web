@@ -30,6 +30,10 @@ module.exports = {
 
           res.redirect("/admin/menu/");
      },
-     createPage: async (req, res, next) => {},
+     createPage: async (req, res, next) => {
+          res.locals.title = "Tạo Món ăn";
+          res.locals.isCreate = true;
+          res.render("admin/menu/food");
+     },
      createFoodHandler: async (req, res, next) => {},
 };
