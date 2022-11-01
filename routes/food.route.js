@@ -6,4 +6,5 @@ const IdValidation = require("../validations/id.validation");
 const router = Router();
 
 router.get("/:idProduct", detailFood);
+
 module.exports = router;
