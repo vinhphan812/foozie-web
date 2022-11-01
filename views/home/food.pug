@@ -1,0 +1,62 @@
+extend ../layouts/common.pug
+block script 
+    script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" referrerpolicy="no-referrer")
+    script.
+        window.onload = () => {
+            $('.slick').slick({slidesToShow: 4, slidesToScroll: 4, draggable: true,
+                //- centerPadding: "100px",
+                focusOnSelect: true})
+        }
+        var quantity = 0;
+            const minus=(e)=> {
+                if($('#quantity').val()>0){
+                    var quantity = parseInt($('#quantity').val());
+                    $('#quantity').val(quantity - 1);
+                } else {
+                    $('#quantity').val(0);
+                }
+            }
+            const plus =(e)=>{
+                var quantity = parseInt($('#quantity').val());
+                $('#quantity').val(quantity + 1);
+            }
+block head
+    link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css")
+block content
+    form.d-flex.justify-content-center.align-items-center.flex-column
+    .body.d-flex.mt-3
+        .col-5.justify-content-center.align-items-center.d-flex
+            img.img-fluid.d-flex(src='/public'+food.thumbnail alt='Responsive image' style="height: 20rem;" )
+        .col-1
+        .col-6.justify-content-center.align-items-center.flex-column
+            h1.text-uppercase=food.name
+            title.d-flex Mã loại món ăn:
+            h5=food.type.name
+            title.d-flex Mô tả món ăn:
+            h5= !food.description ? 'Hiện tại món ăn này chưa có mô tả' : food.description
+            title.d-flex Số lượng:
+            .input-group.w-50.my-2
+                span.input-group-btn
+                    button.minus.btn.btn-primary.btn-number(type='button' data-type='minus' data-field='' onclick='minus()')
+                        span -
+                input#quantity.form-control.input-number(type='text' name='quantity' value='0' min='1')
+                span.input-group-btn
+                    button.plus.btn.btn-primary.btn-number(type='button' data-type='plus' data-field='' onclick='plus()')
+                        span +
+            title.d-flex Giá:
+            h5= food.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
+            button.btn.btn-primary(type='button') Mua ngay
+            button.btn.btn-danger.mx-2(type='button') Thêm vào giỏ hàng
+    .similar-foods.mt-3
+        h2 Các món ăn cùng loại
+        div.slick.bg-light(data-slick='{"slidesToShow": 4, "slidesToScroll": 4}')
+            each valSimilar in similar
+                .px-2
+                    .card(style='margin-bottom:10px;')
+                        img.card-img-top(src='/public'+valSimilar.thumbnail alt='' style="height: 200px;")
+                        .card-body
+                            a.stretched-link(href=`/foods/${valSimilar._id}`)
+                            h5.card-title=valSimilar.name
+                            p.card-text=valSimilar.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
+                            a.btn.btn-primary(href='#') Đặt ngay
