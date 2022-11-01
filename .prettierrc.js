@@ -1,7 +1,7 @@
 module.exports = {
      tabWidth: 5,
-     semi: false,
-     singleQuote: true,
+     semi: true,
+     singleQuote: false,
      trailingComma: "es5",
      overrides: [
           {
