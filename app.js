@@ -17,7 +17,6 @@ const { errorMiddleware } = require("./middlewares/error.middleware");
 // import route
 const apiRoute = require("./api/routers/index.route");
 const indexRoute = require("./routes/index.route");
-
 // import middleware
 const { morganConfig } = require("./utils/constaints");
 const { seoConfigMiddleware } = require("./middlewares/seo.middleware");
@@ -25,6 +24,7 @@ const { sessionMiddleware } = require("./middlewares/session.middleware");
 
 // import config
 const { initDatabase } = require("./configs/config");
+const router = require("./routes/food.route");
 
 const { SECRET_KEY } = process.env;
 
@@ -57,8 +57,9 @@ app.use(sessionMiddleware);
 app.use("/api", apiRoute);
 app.use("/", indexRoute);
 
+// app.use("/", );
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
-	console.log(`server run in port ${PORT}`);
+  console.log(`server run in port ${PORT}`);
 });
