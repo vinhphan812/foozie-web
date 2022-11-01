@@ -8,4 +8,4 @@ allow: /*.jpeg$
 allow: /*.gif$
 allow: /*.png$
 
-Sitemap: https://vinhhphancommunity.xyz/sitemap.xml
+Sitemap: https://vinhphancommunity.xyz/sitemap.xml

@@ -1,0 +1,24 @@
+extend ../../layouts/common.pug
+
+block content 
+     a.btn.btn-primary.my-2(href="/admin/branches/create") 
+          i.bi.bi-plus.me-2
+          span Tạo Chi Nhánh
+     table.table
+          thead
+               tr
+                    th(scope="col") #
+                    th(scope="col") Tên Chi Nhánh
+                    th.d-none.d-md-table-cell(scope="col") Địa Chỉ
+                    th.d-none.d-sm-table-cell(scope="col") Quản Lý
+                    th(scope="col") 
+          tbody
+               each val, index in branches
+                    tr(branch-id=val.id)
+                         td= index+1
+                         td= val.name
+                         td.d-none.d-md-table-cell= val.address
+                         td.d-none.d-sm-table-cell= val.manager ? val.manager.last_name + " " + val.manager.first_name : "Chưa có ngươi quản lý"
+                         td
+                              a(href="/admin/branches/" + val.id + "/update") chỉnh sửa
+                              button.btn.btn-link.delete.bi.bi-trash.text-danger

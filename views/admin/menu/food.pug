@@ -1,0 +1,37 @@
+extend ../../layouts/common.pug
+
+block content
+     //- code= body
+     .row.justify-content-center
+          form.col-md-12.col-xl-6(action=`/admin/menu/${isCreate ? "create" : body.id + "/update"}` method="POST" id=isCreate ? "create" : "edit").bg-white.p-5.shadow-sm
+               if errors && errors.length
+                    each val in errors
+                         .alert.alert-danger.mx-5= val
+               .h2.text-center= isCreate ? "Thêm Món Ăn" : "Chỉnh Sửa Món Ăn"
+               .row.justify-content-center.my-5
+                    //- .img-thumbnail.w-auto#edit-avatar.p-5
+                    img.user-avatar.img-thumbnail#edit-avatar(src=user.avatar ? user.avatar : "/public/images/assets/image.png" alt="")
+                    input#img(type='file' accept='image/*' style="display: none;")
+               .mb-3
+                    label.form-label(for='name') Tên Món Ăn
+                    input#name.form-control(type='text' name="name" placeholder="Tên món ăn" value= body? body.name : "")
+               .mb-3
+                    label.form-label(for='price') Đơn Giá
+                    input#password.form-control(type='text' name="price" placeholder="Đơn giá" value= body? body.price : "")
+               .mb-3
+                    .form-floating
+                         textarea#description.form-control(placeholder='Thông tin mô tả món ăn' name="description")= body? body.description : ""
+                         label(for='description') Mô tả
+
+               .mb-3
+                    label.form-label(for='type') Loại
+                    select.form-select(aria-label='select type' name="type")
+                         option(selected="" value="") Không
+                         if types
+                              each val in types
+                                   option(value=val.id selected=body ? body.type.id == val.id : false)= val.name
+               .d-flex.justify-content-center
+                    input.btn.btn-primary.px-5(type='submit' value=isCreate ? "Tạo" : "Lưu")
+
+block script 
+     script(src="/public/js/upload-avatar.js")

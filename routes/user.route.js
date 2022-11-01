@@ -5,10 +5,11 @@ const {
 const { upload } = require("../configs/uploadFile");
 
 const { userDetails } = require("../controllers/user.controller");
+const { ROLE } = require("../utils/role.enum");
 
 const router = Router();
 
-router.use(decentralization("CUSTOMER"));
+router.use(decentralization(ROLE.CUSTOMER));
 
 router.get("/profile", userDetails);
 

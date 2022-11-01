@@ -8,6 +8,7 @@ html(lang="en")
           link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU' crossorigin='anonymous')
           link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css')
           link(href="/public/css/style.css" rel="stylesheet")
+          link(href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet")
           if links
                for link in links
                     link(href=link, rel='stylesheet')
@@ -25,13 +26,13 @@ html(lang="en")
                               if menu
                                    for item in menu 
                                         li.nav-item
-                                             a.nav-link.active(aria-current='page' href=item.url)= item.title
+                                             a.nav-link.active(aria-current='page' href=item.link)= item.name
                          if !isLogin
                               if user
                                    .dropdown
                                         button#dropdownMenuButton1.btn.btn-light.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
-                                             img.user-avatar-small(src=`/public/images/rankings/${user.current_ranking.code}.png` alt=user.name)
-                                             span= user.first_name + " " + user.last_name
+                                             img.user-avatar-small(src=user.avatar ? user.avatar : `/public/images/rankings/${user.current_ranking.code.toLowerCase()}.png` alt=user.name)
+                                             span= user.last_name + " " + user.first_name
                                         ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
                                              li
                                                   a.dropdown-item(href='/user/profile') Hồ sơ
@@ -43,10 +44,11 @@ html(lang="en")
                                              a.text-light(href="/sign_in") Đăng nhập
                                              span.px-2 /
                                              a.text-light(href="/sign_up") Đăng ký
-                         button(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasRight' aria-controls='offcanvasRight').btn.btn-light.mx-2.position-relative
-                              i.bi.bi-bag
-                              if product && product.length
-                                   span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger 99+
+                         if role == "CUSTOMER" || !role
+                              button(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasRight' aria-controls='offcanvasRight').btn.btn-light.mx-2.position-relative
+                                   i.bi.bi-bag
+                                   if product && product.length
+                                        span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger= product.length
           main.container.py-5
                block content
                #offcanvasRight.offcanvas.offcanvas-end(tabindex='-1' aria-labelledby='offcanvasRightLabel')
@@ -82,12 +84,12 @@ html(lang="en")
                          .col-sm-4
                               h5 Chi Nhánh
                               ul
-                                   each val in branchs
+                                   each val in branches
                                         li
                                              h5= val.name
                                              span.ps-2= val.address + " - " + val.phone
                .footer-copyright.py-2.text-white.text-center
-                    p.m-0 &copy; #{APP_NAME}
+                    p.m-0 &copy; #{APP_NAME} - #{ new Date().getFullYear()}
 
      script(src='//cdn.jsdelivr.net/npm/sweetalert2@11')
      script(src='/public/js/script.js')

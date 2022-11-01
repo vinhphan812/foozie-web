@@ -1,0 +1,27 @@
+extend ../../layouts/common.pug
+
+block content
+      .row.justify-content-center
+          form.col-md-12.col-xl-6(action=`/admin/branches/${isCreate ? "create" : body.id + "/update"}` method="POST" id=isCreate ? "create" : "edit").bg-white.p-5.shadow-sm
+               if errors && errors.length
+                    each val in errors
+                         .alert.alert-danger.mx-5= val
+               .h2.text-center= isCreate ? "Tạo Chi Nhánh" : "Chỉnh Sửa Chi Nhánh"
+               .mb-3
+                    label.form-label(for='name') Tên chi nhánh
+                    input#name.form-control(type='text' name="name" placeholder="Tên chi nhánh" value= body? body.name : "")
+               .mb-3
+                    label.form-label(for='address') Địa chỉ chi nhánh
+                    input#password.form-control(type='text' name="address" placeholder="Địa chỉ" value= body? body.address : "")
+               .mb-3
+                    label.form-label(for='phone') Số điện thoại
+                    input#password.form-control(type='text' name="phone" placeholder="Số diện thoại" value= body? body.phone : "")
+               .mb-3
+                    label.form-label(for='manager') Người quản lý
+                    select.form-select(aria-label='select manager' name="manager")
+                         option(selected='' value="") Không
+                         if managers
+                              each val in managers
+                                   option(value=val.id)= val.last_name + " " + val.first_name
+               .d-flex.justify-content-center
+                    input.btn.btn-primary.px-5(type='submit' value=isCreate ? "Tạo" : "Lưu")

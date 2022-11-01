@@ -1,6 +1,9 @@
 const { APP_NAME, GOOGLE_SEO_VERIFICATION } = process.env;
+const { redisClient } = require("../configs/config");
 const Branch = require("../models/branch.model");
 const User = require("../models/user.model");
+const { BRANCHES_KEY, getBranches, updateBranches } = require("../utils/redis");
+const { MENU_BY_ROLE } = require("../utils/role.enum");
 
 module.exports = {
 	seoConfigMiddleware: async (req, res, next) => {
@@ -10,6 +13,7 @@ module.exports = {
 		if (userId) {
 			const user = await User.get(userId);
 
+			res.locals.menu = MENU_BY_ROLE[user.role];
 			res.locals.user = user;
 			res.locals.userId = userId;
 		}
@@ -29,7 +33,14 @@ module.exports = {
 			image: "",
 		};
 
-		res.locals.branchs = await Branch.find();
+		let branches = await getBranches();
+
+		if (!branches) {
+			branches = await updateBranches();
+		}
+
+		res.locals.branches = branches;
+
 		// saving path for check
 		res.locals.path = req.url;
 		// saving APP_NAME

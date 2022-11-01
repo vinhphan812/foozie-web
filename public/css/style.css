@@ -48,6 +48,13 @@ footer.dark a {
 	background-position: center !important;
 }
 
+.food-image {
+	width: 5rem !important;
+	height: 5rem !important;
+	background-size: cover !important;
+	background-position: center !important;
+}
+
 .league .card-img-top {
 	background-color: #efefef;
 }

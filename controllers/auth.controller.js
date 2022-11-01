@@ -1,5 +1,5 @@
 const md5 = require("md5");
-const User = require("../models/user.model");
+const { User } = require("../models");
 
 module.exports = {
 	loginPage: (req, res, next) => {
@@ -11,6 +11,7 @@ module.exports = {
 		res.render("users/sign_up");
 	},
 	loginHandle: async (req, res, next) => {
+		res.locals.seo.title = "Đăng Nhập";
 		const { user, pass } = req.body;
 		const errors = [];
 		res.locals.login = { user, pass };
@@ -18,6 +19,7 @@ module.exports = {
 		const userData = await User.findOne({
 			$or: [{ username: user }, { email: user }, { phone: user }],
 			password: md5(pass),
+			is_delete: false,
 		});
 
 		if (!userData) {
@@ -38,9 +40,8 @@ module.exports = {
 	},
 
 	signUpHandle: async (req, res, next) => {
+		res.locals.seo.title = "Đăng Ký";
 		const { body, errors } = res.locals;
-
-		console.log(res.locals);
 
 		if (errors.length) {
 			return res.render("users/sign_up");

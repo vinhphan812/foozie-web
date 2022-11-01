@@ -7,7 +7,7 @@ const VirtualDisplayVoucher = require("../../models/virtual_display_voucher.mode
 const {
 	getFoods,
 	getFoodsType,
-	getBranchs,
+	getBranches,
 	getFoodDetail,
 	getVouchersPublic,
 	createVoucherTest,
@@ -38,6 +38,6 @@ router.get("/discount/:id", async function (req, res) {
 
 router.post("/shipping-distance", calculatorShippingFee);
 
-router.get("/branches", getBranchs);
+router.get("/branches", getBranches);
 
 module.exports = router;
