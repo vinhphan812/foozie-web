@@ -10,7 +10,7 @@ block content
                .h2.text-center= isCreate ? "Thêm Món Ăn" : "Chỉnh Sửa Món Ăn"
                .row.justify-content-center.my-5
                     //- .img-thumbnail.w-auto#edit-avatar.p-5
-                    img.user-avatar.img-thumbnail#edit-avatar(src=user.avatar ? user.avatar : "/public/images/assets/image.png" alt="")
+                    img.user-avatar.img-thumbnail#edit-avatar(src=body.thumbnail ? "/public" + body.thumbnail : "/public/images/assets/image.png" alt="")
                     input#img(type='file' accept='image/*' style="display: none;")
                .mb-3
                     label.form-label(for='name') Tên Món Ăn
