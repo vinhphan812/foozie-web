@@ -1,0 +1,16 @@
+extend ../layouts/common.pug
+block content
+    .food-container.container
+        .row
+            each food in foodByType 
+                .col-md-4
+                    .card.float-right.p-2.mt-3
+                        .row
+                            .col-sm-5
+                                img.img-fluid.d-block.w-100.rounded(src=`../..${food.thumbnail}`, style='height: 8rem; width: 8rem')
+                            .col-sm-7
+                                .card-block
+                                    h5.card-title.text-black=food.name
+                                    p.text-black=food.price+'đ'
+                                    .btn.btn-success +
+

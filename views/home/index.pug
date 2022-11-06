@@ -27,10 +27,10 @@ block content
                span.visually-hidden Next
 
      .food-type-container.container
-          h2.p-5 H&atilde;y lo&#x1EA1;i lo&#x1EA1;i m&oacute;n m&igrave;nh th&iacute;ch!
+          h2.p-5 Hãy chọn loại món mình thích
                .row.align-items-center
-                    each val in types
-                         a.col-4.p-3.text-decoration-none(href='')
+                    each val in foodTypes
+                         a.col-4.p-3.text-decoration-none(href=`/food-type/${val.id}`)
                               img.img-fluid.mx-auto.d-block.rounded-3(src=`../../public/images/food_type/${val.code}.jpg`)
                               h5.text-center.text-black=val.name
                     
