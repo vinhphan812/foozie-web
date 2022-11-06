@@ -1,0 +1,4 @@
+if !user || user.role == "CUSTOMER"
+     script(type="text/javascript" src="/public/js/chat.js")
+if user && (user.role == "MANAGER" || user.role == "ADMIN")
+     script(type="text/javascript" src="/public/js/chatAdmin.js")

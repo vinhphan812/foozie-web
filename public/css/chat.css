@@ -1,0 +1,86 @@
+.chat-btn .close {
+    display: none;
+}
+
+.chat-btn i {
+    transition: all 0.9s ease;
+}
+
+#open-chat:checked ~ .chat-btn i {
+    display: block;
+    pointer-events: auto;
+    transform: rotate(360deg);
+}
+
+#check:checked ~ .chat-btn .comment {
+    display: none;
+}
+
+.chat-btn i {
+    font-size: 22px;
+    color: #fff !important;
+}
+
+.chat-btn {
+    position: absolute;
+    right: 14px;
+    bottom: 30px;
+    cursor: pointer;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 22px;
+    border: none;
+}
+
+.wrapper {
+    z-index: 2000;
+    position: absolute;
+    right: 20px;
+    bottom: 100px;
+    width: 300px;
+    height: 400px;
+    background-color: #fff;
+    border-radius: 5px;
+    opacity: 0;
+    transition: all 0.4s;
+}
+
+#open-chat:checked ~ .wrapper {
+    opacity: 1;
+}
+
+.header {
+    padding: 13px;
+    background-color: blue;
+    border-radius: 5px 5px 0px 0px;
+    color: #fff;
+}
+
+.chat-form {
+    padding: 15px;
+}
+
+.chat-form textarea {
+    resize: none;
+}
+
+.form-control:focus,
+.btn:focus {
+    box-shadow: none;
+}
+
+#open-chat {
+    display: none !important;
+}
+
+.notify {
+    position: absolute;
+    right: 10px;
+    bottom: 80px;
+    z-index: 1;
+}

@@ -1,0 +1,34 @@
+extend ../layouts/common.pug
+block content
+     section.bg-white
+          .container.py-5                         
+               .row
+                    .col-md-6.col-lg-5.col-xl-4.mb-4.mb-md-0
+                         .h4.font-weight-bold.mb-3.text-center.text-lg-start Tin Nhắn
+                         .card
+                              .card-body
+                                   ul.list-unstyled.mb-0.list-group#chat-user
+                                   // render chat
+                    .col-md-6.col-lg-7.col-xl-8
+                         .flex-column
+                              .h4#user-info Brad Pitt
+                              span.small.text-muted#sub-info @email - phone
+                         hr
+                         ul.list-unstyled.overflow-auto#chat-user-for.my-3(style="height: 400px")
+                              //- li.d-flex.justify-content-between.mb-4
+                              //-      img.rounded-circle.d-flex.align-self-start.me-3.shadow-1-strong(src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp", alt="avatar", width="60")
+                              //-      .card
+                              //-           .card-header.d-flex.justify-content-between.p-3
+                              //-                p.fw-bold.mb-0 Brad Pitt
+                              //-                p.text-muted.small.mb-0
+                              //-                     i.far.fa-clock
+                              //-                     | 12 mins ago
+                              //-           .card-body
+                              //-                p.mb-0
+                              //-                     | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                              //-                     | labore et dolore magna aliqua.
+                         .bg-white.mb-3
+                              .input-group
+                                   input#inbox.form-control(type="text" placeholder="Phản hồi")
+                                   button.btn.btn-primary#send(type='submit')
+                                        i.bi.bi-send

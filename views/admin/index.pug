@@ -4,7 +4,7 @@ block content
      .h2.mb-4 Quản Lý
      if role == "ADMIN"
           .row.mb-4
-               .col-sm-6
+               .col-sm-6.mb-2
                     a.card.text-decoration-none(href="/admin/branches")
                          .card-body
                               h5.card-title Chi Nhánh
@@ -13,13 +13,13 @@ block content
                     a.card.text-decoration-none(href="/admin/users")
                          .card-body
                               h5.card-title Người Dùng
-                              p.card-text.text-muted Quản lý người dùng hiện thời trên Foozie Foods
+                              p.card-text.text-muted Quản lý người dùng trên Foozie Foods
      .row
-          .col-sm-6
+          .col-sm-6.mb-2
                a.card.text-decoration-none(href="/admin/menu")
                     .card-body
                          h5.card-title Menu
-                         p.card-text.text-muted Quản lý danh sách món ăn hiện thời trên Foozie Foods
+                         p.card-text.text-muted Quản lý danh sách món ăn trên Foozie Foods
           .col-sm-6
                a.card.text-decoration-none(href="/admin/orders")
                     .card-body

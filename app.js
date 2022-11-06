@@ -6,6 +6,8 @@ require("./models");
 
 // import modules
 const path = require("path");
+const http = require("http");
+const { Server } = require("socket.io");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -24,6 +26,7 @@ const { sessionMiddleware } = require("./middlewares/session.middleware");
 
 // import config
 const { initDatabase } = require("./configs/config");
+const SocketInit = require("./sockets");
 
 const { SECRET_KEY } = process.env;
 
@@ -32,6 +35,15 @@ const PORT = process.env.port || 3000;
 
 // init app
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+     cors: {
+          origin: ["https://admin.socket.io"],
+          credentials: true,
+     },
+});
+
+SocketInit(io);
 
 initDatabase();
 
@@ -50,8 +62,7 @@ app.use(favicon("./public/images/assets/restaurant.png"));
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "./views"));
 
-app.use(seoConfigMiddleware);
-app.use(sessionMiddleware);
+app.use(seoConfigMiddleware, sessionMiddleware);
 
 // use route
 app.use("/api", apiRoute);
@@ -59,6 +70,6 @@ app.use("/", indexRoute);
 
 app.use(errorMiddleware);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
      console.log(`server run in port ${PORT}`);
 });
