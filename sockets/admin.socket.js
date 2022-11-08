@@ -1,55 +1,32 @@
-const { SECRET_KEY } = process.env;
-
-const cookieParser = require("cookie-parser");
-const cookie = require("cookie");
-
 const { User, Chat, Message } = require("../models/index");
-const { ROLE } = require("../utils/role.enum");
+const adminController = require("./controllers/admin.controller");
+const { adminAuth } = require("./middlewares/auth.middleware");
 
 /**
  *
  * @param {IO} io
  */
 
+async function countNotSeen() {
+     return await Message.count({ is_seen: false });
+}
+
+async function countNotSeenWithRoom(room) {
+     return (await Message.count({ room, is_seen: false })).length;
+}
+
 module.exports = (io) => {
      const adminIO = io.of("/admin");
+     const ctrler = adminController(io);
 
-     async function countNotSeen() {
-          return await Message.count({ is_seen: false });
-     }
+     // auth
+     adminIO.use(adminAuth);
 
-     async function countNotSeenWithRoom(room) {
-          return (await Message.count({ room, is_seen: false })).length;
-     }
-
-     adminIO.use(async (socket, next) => {
-          const cookies = cookie.parse(socket.request.headers["cookie"]);
-
-          if (!cookies || !Object.keys(cookies).length) {
-               socket.disconnect();
-               return;
-          }
-
-          const { userId } = cookieParser.signedCookies(cookies, SECRET_KEY);
-
-          if (!userId) {
-               socket.disconnect();
-               return;
-          }
-
-          const user = await User.findOne({ _id: userId });
-
-          if (user.role != ROLE.ADMIN && user.role != ROLE.MANAGER) {
-               socket.disconnect();
-               return;
-          }
-          console.log("auth done");
-          next();
-     });
      adminIO.on("connection", (socket) => {
-          console.log(socket);
-          socket.on("user_connect", (data) => {
-               console.log(data);
+          console.log(socket, io);
+
+          socket.on("chatChanged", (chat) => {
+               socket.emit("changed", chat);
           });
 
           socket.on("user:chat", async ({ roomid }) => {
@@ -80,11 +57,12 @@ module.exports = (io) => {
                const count = await countNotSeenWithRoom(roomid);
                socket.emit("res:count:room", { count, roomid });
                socket.emit("res:count", await countNotSeen());
+
                socket.emit("user:data", { user, room, messages });
           });
-          socket.on("req:count", async () => {
+          socket.on("req:count", async (arg) => {
+               console.trace();
                const data = await countNotSeen();
-               console.log(data);
                socket.emit("res:count", data);
           });
           socket.on("req:chats", async () => {
