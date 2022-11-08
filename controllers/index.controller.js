@@ -10,7 +10,8 @@ module.exports = {
                "Food Delivery",
           ];
 
-          console.log(await Food.find().limit(5));
+          const foodTypes = await FoodType.find({});
+          res.locals.foodTypes = foodTypes || [];
 
           res.render("home/index");
           res.end();
