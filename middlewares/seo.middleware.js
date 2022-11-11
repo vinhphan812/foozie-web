@@ -21,6 +21,8 @@ module.exports = {
           // role display UI
           res.locals.listNotDisplaySignNav = ["/sign_in", "/sign_up"];
           res.locals.errors = [];
+          res.locals.isHosting = req.hostname != "localhost";
+          console.log(req);
 
           // init seo config object saving to locals response storage
           res.locals.seo = {

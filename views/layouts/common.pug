@@ -18,8 +18,8 @@ html(lang="en")
           main.container.py-5
                block content
                include ../includes/cart.pug
-               if !user || user.role == "CUSTOMER"
-                    include ../includes/chatbox.pug
+     script.
+          
 
      block footer
           include ../includes/footer.pug
@@ -33,32 +33,7 @@ html(lang="en")
      script(src="/socket.io/socket.io.min.js" type="text/javascript") 
 
      include ../includes/chatScript.pug
-
-     if !user || user.role == "CUSTOMER"
-          #fb-root
-          // Your Plugin chat code
-          #fb-customer-chat.fb-customerchat
-          script.
-               var chatbox = document.getElementById('fb-customer-chat');
-               chatbox.setAttribute("page_id", "112075081712090");
-               chatbox.setAttribute("attribution", "biz_inbox");
-               chatbox.setAttribute("app_id", "260206602318334");
-          // Your SDK code
-          script.
-               window.fbAsyncInit = function() {
-               FB.init({
-               xfbml            : true,
-               version          : 'v15.0'
-               });
-               };
-               (function(d, s, id) {
-               var js, fjs = d.getElementsByTagName(s)[0];
-               if (d.getElementById(id)) return;
-               js = d.createElement(s); js.id = id;
-               js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-               fjs.parentNode.insertBefore(js, fjs);
-               }(document, 'script', 'facebook-jssdk'));
-
+     
      if scripts 
           for script in scripts
                script(src=script)

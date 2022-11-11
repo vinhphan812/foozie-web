@@ -30,11 +30,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.dark.text-light
                                         a.text-light(href="/sign_in") Đăng nhập
                                         span.px-2 /
                                         a.text-light(href="/sign_up") Đăng ký
-                    if user && (user.role == "ADMIN" || user.role == "MANAGER")
-                         a(href="/admin/chats").btn.btn-light.mx-2.position-relative
-                              i.bi.bi-chat
-                              span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger#message-count= chat && chat.length ? chat.length : ""
-                    
+                                        
                     if user && user.role == "CUSTOMER" || !user
                          button(type='button' data-bs-toggle='offcanvas' data-bs-target='#Cart' aria-controls='Cart').btn.btn-light.mx-2.position-relative
                               i.bi.bi-bag
