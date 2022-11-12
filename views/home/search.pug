@@ -42,7 +42,7 @@ block content
                                                        a.link-secondary.text-decoration-none(href=`/foods/${valFoods._id}`)
                                                             h5.card-title=valFoods.name
                                                        p.card-text=valFoods.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
-                                                       a.btn.btn-outline-primary(href='#') Đặt ngay
+                                                       a.btn.btn-outline-primary(href=`/foods/${valFoods._id}`) Đặt ngay
                     else 
                          .d-flex.justify-content-center.align-items-center.h-100
                               .h1.text-muted Không tìm thấy kết quả nào...!
