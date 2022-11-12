@@ -1,4 +1,4 @@
-const { Food, FoodType } = require("../models/index");
+const { Food, FoodType, Store } = require("../models/index");
 module.exports = {
      homePage: async (req, res, next) => {
           res.locals.seo.title = "Trang Chủ";
@@ -10,12 +10,20 @@ module.exports = {
                "Food Delivery",
           ];
 
+          const { user } = res.locals;
+
           const foodTypes = await FoodType.find({});
           res.locals.foodTypes = foodTypes || [];
+
+          if (user !== undefined) {
+               const data = await Store.getCart(user.id);
+               res.locals.cart = data || [];
+          }
 
           res.render("home/index");
           res.end();
      },
+
      searchPage: async (req, res, next) => {
           res.locals.seo.title = "Tìm Kiếm";
           res.locals.seo.description = "Tìm kiếm món ăn trên Foozie Foods";
@@ -42,8 +50,6 @@ module.exports = {
           }
 
           const $regex = new RegExp(q, "i");
-
-          console.log(typeIds);
 
           const foods = await Food.find({
                ...(q

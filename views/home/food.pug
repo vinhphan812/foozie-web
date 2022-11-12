@@ -33,6 +33,20 @@ block script
                 var quantity = parseInt($('#quantity').val());
                 $('#quantity').val(quantity + 1);
             }
+
+
+            $('.add-to-cart').on('click', function (e) {
+                $.ajax({
+                    type: "POST",
+                    url: "/user/cart",
+                    data: {
+                        food: $(this).data("value"),
+                        quantity: $("#quantity").val()
+                    },
+                    dataType: 'json'
+                });       
+            }); 
+
 block head
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css")
     link(rel="stylesheet" type="text/css" href="/public/css/rating.css")
@@ -61,7 +75,7 @@ block content
                             input#quantity.btn.btn-outline-secondary.text-center(type='text' name='quantity' value='0' min='1' disabled=true style="width:50px")
                             button.plus.btn.btn-outline-secondary(type='button' data-type='plus' data-field='' onclick='plus()') +
                     .mt-3
-                        button.btn.btn-outline-primary.me-2.rounded-0(type='button' data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng") 
+                        button.add-to-cart.btn.btn-outline-primary.me-2.rounded-0(type='button' data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng" data-value=`${food.id}`) 
                             i.bi.bi-cart-plus-fill.px-2
                             //- span Thêm vào giỏ hàng
                         button.btn.btn-primary.rounded-0(type='button') Mua ngay

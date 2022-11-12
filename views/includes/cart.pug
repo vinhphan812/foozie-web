@@ -1,6 +1,16 @@
+
 #Cart.offcanvas.offcanvas-end(tabindex='-1' aria-labelledby='Cart')
      .offcanvas-header
           .h2#offcanvasRightLabel Cart
           button.btn-close.text-reset(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
      .offcanvas-body
-          span.h1 EMPTY
+          if(cart)
+               each item in cart
+                    .d-flex.flex-row.align-items-center.justify-content-between.mb-3
+                         .d-flex.flex-row
+                              img.rounded(src=`../..${item.thumbnail}` alt='' style="width:5rem; height: 5rem; margin-right:10px")
+                              .d-flex.flex-column
+                                   a.h5.mb-0.text-decoration-none(href=`/foods/${item.id}`)=item.name.substring(0, 17) + "..." 
+                                   div=`Giá cả: ${item.price}đ` 
+                                   div=`Số lượng: ${item.quantity}`
+                         button.remove-from-cart.btn.i.bi.bi-trash-fill.px-1(style="color: red" data-value=`${item.id}`)
