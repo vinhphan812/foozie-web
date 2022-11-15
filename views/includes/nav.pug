@@ -31,10 +31,10 @@ nav.navbar.navbar-expand-lg.navbar-dark.dark.text-light
                                         span.px-2 /
                                         a.text-light(href="/sign_up") Đăng ký
                                         
-                    if user && user.role == "CUSTOMER" || !user
+                    if (user && user.role == "CUSTOMER" || !user ) && !isOrder
                          button(type='button' data-bs-toggle='offcanvas' data-bs-target='#Cart' aria-controls='Cart').btn.btn-light.mx-2.position-relative
                               i.bi.bi-bag
-                              if product && product.length
-                                   span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger= product.length
+                              if cart && cart.length
+                                   span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger#cart-length= cart.length
 
                //- code #{user}

@@ -1,18 +1,7 @@
 extend ../layouts/common.pug
 block script
-     script.
-          document.forms[0].onsubmit= () => {
-               const forms = document.forms[0];
-
-               const type = []
-               forms.type.forEach((e) => {
-                    if(e.checked)
-                         type.push(e.value)
-               });
-
-               window.location.href = `/search?q=${forms['q'].value}&type=${type}`
-               return false;
-          }
+     script(type="text/javascript" src="/public/js/search.js")
+          
 
 block content 
      form.d-flex.justify-content-center.align-items-center.flex-column
@@ -22,30 +11,32 @@ block content
                     input(type="submit" value="Tìm kiếm")#btn-search.btn.btn-primary
           if body.q
                .h4.mb-4.text-center #{foods.length == 0 ? "Không tìm thấy" : `Tìm thấy ${foods.length}`} kết quả cho từ khóa "#{body.q}"
-          .row.w-100.flex-column.flex-lg-row
-               .col-lg-3.pe-1
+          .row.w-100.flex-column.flex-xl-row
+               .col-xl-3.pe-1
                     .h5 Tùy chọn tìm kiếm
-                    .list-group.d-flex.flex-row.flex-lg-column.align-items-center.flex-wrap.justify-content-between.mb-lg-0.mb-3
+                    .list-group.d-flex.flex-row.flex-xl-column.align-items-center.flex-wrap.justify-content-between.mb-lg-0.mb-3
                          each valTypes in foodTypes
                               .form-check.my-2
                                    input.form-check-input(type='checkbox' name="type" id=valTypes.code value=valTypes.code checked=body ? body.type.includes(valTypes.code) : false)
                                    label.badge.fs-6.bg-primary.form-check-label(for=valTypes.code style="width:130px;")= valTypes.name
-               .col-lg-9.ps-1
+               .col-xl-9.ps-1
                     if foods && foods.length
                          .container
-                              .row.row-cols-2.row-cols-lg-3.justify-content-center
-                                   each valFoods in foods
-                                        .col
-                                             .card(style='margin-bottom:10px;')
-                                                  img.card-img-top(src=valFoods.thumbnail alt=valFoods.name style="height: 200px;")
+                              .row.row-cols-1.row-cols-sm-2.row-cols-lg-3.justify-content-center
+                                   each food in foods
+                                        .col.mb-4
+                                             .card.h-100
+                                                  img.card-img-top(src=food.thumbnail alt=food.name style="height: 200px;")
                                                   .card-body
-                                                       a.link-secondary.text-decoration-none(href=`/foods/${valFoods._id}`)
-                                                            h5.card-title=valFoods.name
-                                                       p.card-text=valFoods.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
-                                                       a.btn.btn-outline-primary(href='#') Đặt ngay
+                                                       a.link-secondary.text-decoration-none(href=`/foods/${food._id}`)
+                                                            h5.card-title=food.name
+                                                       p.card-text=food.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
+                                                       a.btn.btn-outline-primary.buy(food-id=food._id) Đặt ngay
                     else 
                          .d-flex.justify-content-center.align-items-center.h-100
                               .h1.text-muted Không tìm thấy kết quả nào...!
+     form(action="/order/buy" method="POST" name="buy").d-none
+          input(name="food" value="")
 
 
 

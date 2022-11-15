@@ -1,4 +1,9 @@
-const { Food, FoodType } = require("../models/index");
+const {
+     Food,
+     FoodType,
+     Voucher,
+     VirtualDisplayVoucher,
+} = require("../models/index");
 module.exports = {
      homePage: async (req, res, next) => {
           res.locals.seo.title = "Trang Chủ";
@@ -68,5 +73,37 @@ module.exports = {
           res.locals.foodTypes = foodTypes || [];
           res.locals.foods = foods || [];
           res.render("home/search");
+     },
+     vouchers: async (req, res, next) => {
+          const { userId } = req.signedCookies;
+          let myVouchers = [];
+
+          res.locals.seo.title = "Vouchers";
+          res.locals.seo.description = "Trang nhận khuyến mãi của Foozie Foods";
+          res.locals.seo.keywords = [
+               "Voucher Foozie Foods",
+               "Khuyến Mãi",
+               "Khuyến mãi Foozie Foods",
+               "Vouchers",
+               "Khuyến mãi cho khách hàng ",
+               "Giảm Giá",
+          ];
+          if (userId)
+               myVouchers = (
+                    await VirtualDisplayVoucher.find(
+                         { user_id: userId },
+                         { voucher_id: 1 }
+                    )
+               ).map((e) => e.voucher_id.toString());
+
+          let data = await Voucher.getValid();
+
+          if (myVouchers.length) {
+               data = data.filter((e) => !myVouchers.includes(e.id));
+          }
+
+          res.locals.vouchers = data;
+
+          res.render("home/vouchers");
      },
 };

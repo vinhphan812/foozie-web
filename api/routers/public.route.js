@@ -12,7 +12,8 @@ const {
      getVouchersPublic,
      createVoucherTest,
      calculatorShippingFee,
-     chat,
+     getCart,
+     addToCart,
 } = require("../controllers/public.controller");
 const Voucher = require("../../models/voucher.model");
 
@@ -40,5 +41,7 @@ router.get("/discount/:id", async function (req, res) {
 router.post("/shipping-distance", calculatorShippingFee);
 
 router.get("/branches", getBranches);
+
+router.route("/cart").get(getCart).post(addToCart);
 
 module.exports = router;

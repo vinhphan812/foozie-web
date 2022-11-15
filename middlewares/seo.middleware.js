@@ -4,6 +4,7 @@ const Branch = require("../models/branch.model");
 const User = require("../models/user.model");
 const { BRANCHES_KEY, getBranches, updateBranches } = require("../utils/redis");
 const { MENU_BY_ROLE } = require("../utils/role.enum");
+const moment = require("moment");
 
 module.exports = {
      seoConfigMiddleware: async (req, res, next) => {
@@ -21,8 +22,10 @@ module.exports = {
           // role display UI
           res.locals.listNotDisplaySignNav = ["/sign_in", "/sign_up"];
           res.locals.errors = [];
+
           res.locals.isHosting = req.hostname != "localhost";
-          console.log(req);
+          res.locals.isOrder = req.originalUrl == "/order";
+          res.locals.moment = moment;
 
           // init seo config object saving to locals response storage
           res.locals.seo = {

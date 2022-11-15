@@ -2,11 +2,22 @@ const { Food, FoodType, Comment } = require("../models/index");
 
 module.exports = {
      detailFood: async (req, res, next) => {
-          const { idProduct } = req.params;
+          const { id } = req.params;
+          const { user } = res.locals;
 
-          const food = await Food.get(idProduct);
+          const food = await Food.get(id);
+
+          if (!food) return next();
+
           const similarFood = await Food.find({ type: food.type });
-          const comments = await Comment.find({ food: food._id });
+          const comments = await Comment.find({ food: food._id }).populate(
+               "user",
+               ["first_name", "last_name", "avatar"]
+          );
+
+          if (user) {
+               res.locals.scripts = ["/public/js/comment.js"];
+          }
 
           res.locals.seo.title = food.name;
           res.locals.seo.description = food.description;
@@ -22,5 +33,24 @@ module.exports = {
           res.locals.similar = similarFood || undefined;
           res.locals.comments = comments;
           res.render("home/food");
+     },
+     commentFood: async (req, res, next) => {
+          const { user } = res.locals;
+          const { id } = req.params;
+          const { comment, stars } = req.body;
+
+          const food = await Food.findOne({ _id: id });
+
+          if (!food) return res.redirect("/");
+
+          await Comment.create({
+               food: id,
+               user: user._id,
+               comment,
+               rate: stars,
+               date: new Date(),
+          });
+
+          res.redirect("/foods/" + id);
      },
 };

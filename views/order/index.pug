@@ -1,0 +1,47 @@
+extend ../layouts/common.pug
+
+block content
+     .container.bg-white.shadow-sm.p-4
+          .h2 #{APP_NAME} Thanh Toán
+          hr
+          .h3 Các món đã chọn
+          each val in cart
+               .card.mb-3
+                    .row.g-0
+                         .col-md-4
+                              .img-fluid.rounded-start(style=`background-image: url('${val.thumbnail}'); height:100%; background-position: center; background-size: cover;` alt=val.name height="92px")
+                         .col-md-8.d-flex.align-items-center
+                              .card-body
+                                   .d-flex.flex-row.justify-content-between
+                                        .d-flex.flex-column
+                                             a(href="/foods/" + val._id).link-secondary.h5.card-title= val.name
+                                             p.card-text
+                                                  .h6.text-muted= val.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+                                        .d-flex.align-items-center
+                                             .h5.card-text= "x" + val.quantity
+                                        .d-flex.align-items-center
+                                             .h5.card-text= (val.price * val.quantity).toLocaleString('vi', {style : 'currency', currency : 'VND'})
+          hr
+          .shadow-sm.bg-light.p-4.d-flex.justify-content-between.align-items-center
+               .h5.m-0 Foozie Voucher  
+               button.btn.btn-primary(type='button', data-bs-toggle='modal', data-bs-target='#voucherModel') Chọn voucher
+          // Modal
+          #voucherModel.modal.fade(tabindex='-1', aria-labelledby='voucherModelLabel', aria-hidden='true')
+               .modal-dialog.modal-fullscreen-md-down
+                    .modal-content
+                         .modal-header
+                              h5#voucherModelLabel.modal-title Chọn Voucher #{APP_NAME}
+                         .modal-body
+                              if vouchers.length
+                                   ul 
+                                        each voucher in vouchers
+                                             .form-check
+                                                  input.form-check-input(type="radio" name="voucher" id=voucher._id)
+                                                  label.form-check-label(for=voucher._id)= voucher.name
+                              else 
+                                   .h5.text-muted Hiện chưa có voucher nào khả dụng.
+                         .modal-footer
+                              button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Thoát
+                              button.btn.btn-primary#save-voucher(type='button') Sử dụng
+block script
+     script(src="/public/js/order.js")

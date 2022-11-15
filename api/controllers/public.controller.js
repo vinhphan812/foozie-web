@@ -6,6 +6,7 @@ const {
      Food,
      Voucher,
      VirtualDisplayVoucher,
+     Store,
 } = require("../../models");
 
 module.exports = {
@@ -148,5 +149,29 @@ module.exports = {
                               : DEFAULT_SHIPPING_FEE,
                },
           });
+     },
+     addToCart: async (req, res) => {
+          const { food, type, quantity } = req.body;
+          const { sessionId } = req.signedCookies;
+
+          if (food.length != 24)
+               return res.json({ success: false, message: "ID_INVALID" });
+
+          if (!(await Food.findOne({ _id: food })))
+               return res.json({
+                    success: false,
+                    message: "FOOD_NOT_CONTAINT",
+               });
+          // type is a [INCREASEMENT, DECREASEMENT]
+          const message = await Store.addCart(sessionId, food, type, quantity);
+          const data = await Store.getCart(sessionId);
+          res.json({ success: true, message, data });
+     },
+     getCart: async (req, res) => {
+          const { sessionId } = res.signedCookies;
+
+          const data = await Store.getCart(sessionId);
+
+          res.json({ success: true, data });
      },
 };

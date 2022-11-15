@@ -31,6 +31,6 @@ block content
                .row.align-items-center
                     each val in foodTypes
                          a.col-4.p-3.text-decoration-none(href=`/search?q=&type=${val.code}`)
-                              img.img-fluid.mx-auto.d-block.rounded-3(src=`../../public/images/food_type/${val.code}.jpg`)
+                              img.img-fluid.mx-auto.d-block.rounded-3.shadow-sm(src=`../../public/images/food_type/${val.code}.jpg`)
                               h5.text-center.text-black=val.name
                     
