@@ -49,6 +49,7 @@ OrderSchema.static({
      createOrder: async function (
           sessionId,
           user,
+          cart,
           branch,
           note,
           voucher_using,
@@ -74,13 +75,13 @@ OrderSchema.static({
                branch,
                note,
                user,
-               shipping_fee: shipping_fee || DEFAULT_SHIPPING_FEE,
+               shipping_fee: shipping_fee,
                delivery,
           });
 
           // make order detail
           await OrderDetail.create(
-               data.map((e) => ({
+               cart.map((e) => ({
                     order_id: myOrder.id,
                     food_id: e._doc._id,
                     quantity: e._doc.quantity,
@@ -90,8 +91,8 @@ OrderSchema.static({
           let total_foods = 0,
                total = 0;
 
-          for (const { _doc } of data) {
-               const { price, quantity } = _doc;
+          for (const item of cart) {
+               const { price, quantity } = item;
                total_foods += price * quantity;
           }
 
@@ -109,7 +110,10 @@ OrderSchema.static({
                }
 
                total = discount.data.price + discount.data.shipping_fee;
-          } else total = shipping_fee + total_foods;
+          } else {
+               if (shipping_fee) total = shipping_fee + total_foods;
+               else total = DEFAULT_SHIPPING_FEE + total_foods;
+          }
 
           await Order.updateOne(
                { _id: myOrder.id },

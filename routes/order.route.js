@@ -5,6 +5,7 @@ const {
      BuyHandle,
      createOrder,
      zalopayRes,
+     createOrder,
 } = require("../controllers/order.controller");
 
 const IdValidation = require("../validations/id.validation");

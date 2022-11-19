@@ -78,6 +78,7 @@ module.exports = {
 
           res.redirect("/order");
      },
+
      zalopayRes: async (req, res, next) => {
           const {
                appid,

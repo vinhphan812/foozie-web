@@ -1,5 +1,12 @@
 extend ../layouts/common.pug
 
+block script
+     script(type="text/javascript" src="/public/js/order.js")
+
+block head 
+     link(rel="stylesheet" href="/public/css/blue.css")
+     link(rel="stylesheet" href="/public/css/bank.css")
+
 block content
      .container.bg-white.shadow-sm.p-4
           .h1 
