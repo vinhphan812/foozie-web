@@ -1,6 +1,6 @@
 form.d-flex(method='POST' action='/foods/' + food._id + "/comment" id="comment")
     .input-group
-        .input-group-text.justify-content-center
+        .input-group-text.justify-content-center(data-bs-toggle="tooltip" data-bs-placement="top" title="Đánh giá")
             .rating
                 label
                     input(type='radio' name='stars' value='1')

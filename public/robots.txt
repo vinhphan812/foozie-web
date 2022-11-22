@@ -8,5 +8,6 @@ allow: /*.jpeg$
 allow: /*.gif$
 allow: /*.png$
 allow: /foods/*
+allow: /search
 
-Sitemap: https://vinhphancommunity.xyz/sitemap.xml
+Sitemap: https://vinhphancommunity.xyz/public/sitemap.xml

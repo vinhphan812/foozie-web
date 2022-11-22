@@ -31,7 +31,7 @@ const OrderSchema = new Schema(
           payment_status: {
                type: String,
                default: "UNPAID",
-               enum: ["UNPAID", "PAID", "CANCEL"],
+               enum: ["UNPAID", "PAID"],
           },
           status: {
                type: String,
@@ -47,26 +47,30 @@ const OrderSchema = new Schema(
 
 OrderSchema.static({
      createOrder: async function (
+          sessionId,
           user,
           branch,
           note,
           voucher_using,
           shipping_fee,
-          delivery
+          delivery,
+          payment_method
      ) {
-          const data = await Store.getCart(user);
+          const data = await Store.getCart(sessionId);
 
           if (!data.length)
                return { success: false, message: "FOOD_ORDER_IS_EMPTY" };
 
           // check id
-          if (voucher_using && checkInvalidID(voucher_using))
-               return { success: false, message: "VOUCHER_ID_INVALID" };
-
-          voucher_using = await Voucher.findOne({ _id: voucher_using });
+          if (voucher_using) {
+               if (checkInvalidID(voucher_using))
+                    return { success: false, message: "VOUCHER_ID_INVALID" };
+               voucher_using = await Voucher.findOne({ _id: voucher_using });
+          }
 
           //create order
           const myOrder = await this.create({
+               payment_method,
                branch,
                note,
                user,
@@ -114,7 +118,7 @@ OrderSchema.static({
 
           //TODO: create NOTIFICATION
 
-          Store.clearCart(user);
+          Store.clearCart(sessionId);
 
           return {
                success: true,
@@ -124,12 +128,14 @@ OrderSchema.static({
           };
      },
      getOrders: async function (user) {
-          const orders = await this.find({ user }, ignoreModel());
+          const orders = await this.find({ user }, ignoreModel())
+               .populate("branch", ["name"])
+               .sort({ order_date: -1 });
 
           return orders;
      },
      getOrderDetail: async function (_id) {
-          const order = await this.findOne({ _id });
+          const order = await this.findOne({ _id }).populate("branch");
           const data = await OrderDetail.find(
                { order_id: order.id },
                ignoreModel(["created_at", "updated_at", "order_id", "_id"])
@@ -138,6 +144,7 @@ OrderSchema.static({
           order._doc.details = data.map((e) => {
                return { ...e.food_id._doc, quantity: e.quantity };
           });
+          order.details = order._doc.details;
           return order;
      },
 });

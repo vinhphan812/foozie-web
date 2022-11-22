@@ -3,20 +3,26 @@ block content
      .bg-white.px-5.py-4.shadow-sm
           .h3 Ưu Đãi Từ #{APP_NAME}
           .container
-               .row.row-cols-1.row-cols-sm-2.row-cols-lg-3.justify-content-center
-                    each voucher in vouchers
-                         .col.card.mb-3.mx-2.p-3
-                              .row.g-0.justify-content-center.align-items-center
-                                   .col-md-2.d-flex.justify-content-center.align-items-center
-                                        img.img-fluid.rounded-start(src='/public/images/assets/voucher-icon.png', alt=voucher.name width="64px")
-                                   .col-md-8
-                                        .card-body
-                                             h5.card-title= voucher.name
-                                             p.card-text= voucher.description
-                                             p.card-text
-                                                  small.badge.bg-primary=voucher.code
-                                   if user
-                                        .col.d-flex.justify-content-center
-                                             button.btn.btn-outline-primary.take-voucher-btn(voucher-id=voucher._id) Nhận
+               if vouchers.length
+                    .row.row-cols-1.row-cols-sm-2.row-cols-lg-3.justify-content-center
+                         each voucher in vouchers
+                              .col.card.mb-3.mx-2.p-3
+                                   .row.g-0.justify-content-center.align-items-center
+                                        .col-md-2.d-flex.justify-content-center.align-items-center
+                                             img.img-fluid.rounded-start(src='/public/images/assets/voucher-icon.png', alt=voucher.name width="64px")
+                                        .col-md-8
+                                             .card-body
+                                                  h5.card-title= voucher.name
+                                                  p.card-text= voucher.description
+                                                  p.card-text
+                                                       small.badge.bg-primary=voucher.code
+                                        if user
+                                             .col.d-flex.justify-content-center
+                                                  button.btn.btn-outline-primary.take-voucher-btn(voucher-id=voucher._id) Nhận
+               else 
+                    .alert.alert-primary.text-center
+                         i.fs-1.bi.bi-emoji-expressionless
+                         .h3 Hiện chưa có Khuyến mãi nào từ #{APP_NAME}
+                         span Quay lại sau nhé...!
 block script
      script(type="text/javascript" src="/public/js/take-voucher.js")

@@ -1,0 +1,24 @@
+extend ../layouts/common.pug
+
+block content
+     ul
+          each order in orders
+               .card.mb-3.shadow-sm
+                    .row.g-0
+                         .col-md-1
+                              .d-flex.justify-content-center.align-items-center.h-100
+                                   i.bi.bi-box2-heart.fs-1
+                         .col-md-11.d-flex.align-items-center
+                              .card-body
+                                   .row.align-items-center
+                                        .col-md-6.d-flex.flex-column.small
+                                             a(href="/orders/" + order.id).link-secondary.card-title ##{order.id}
+                                             p.card-text.h6.text-muted #{order.branch.name} > #{order.delivery}
+                                             p.card-text.text-muted.small= moment(order.order_date).format(((new Date() - order.order_date) / (1000 * 60 * 60 * 24)) >= 1 ? "DD-MM-yyyy hh:mm" : "hh:mm")
+                                        .col-md-6.d-flex.align-items-center.justify-content-between
+                                             .h5.card-text= status_term[order.status]
+                                             .h5.card-text.d-flex.flex-column.align-items-center
+                                                  img(src=`/public/images/assets/payment-${order.payment_method == "PAYMENT" ? "online" : "cod"}.png` width="48px" data-bs-toggle="tooltip" data-bs-placement="bottom" title=payment_term[order.payment_method])
+                                                  .h5.card-text= status_pay_term[order.payment_status]
+                                             .h5.card-text= order.total.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+               //- code= order

@@ -21,7 +21,7 @@ module.exports = {
                else return res.redirect("/sign_in");
 
                if (PERMISSIONS[userPerms] < PERMISSIONS[perms || ROLE.CUSTOMER])
-                    return res.status(403).render("error/permission");
+                    return res.status(403).render("error/404");
 
                res.locals.role = userPerms;
 

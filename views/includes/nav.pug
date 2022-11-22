@@ -34,7 +34,6 @@ nav.navbar.navbar-expand-lg.navbar-dark.dark.text-light
                     if (user && user.role == "CUSTOMER" || !user ) && !isOrder
                          button(type='button' data-bs-toggle='offcanvas' data-bs-target='#Cart' aria-controls='Cart').btn.btn-light.mx-2.position-relative
                               i.bi.bi-bag
-                              if cart && cart.length
-                                   span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger#cart-length= cart.length
+                              span.position-absolute.top-0.start-100.translate-middle.badge.rounded-pill.bg-danger#cart-length= cart.length ? cart.length : ""
 
                //- code #{user}

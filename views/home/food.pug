@@ -11,25 +11,25 @@ block content
         .row.justify-content-evenly
             .col-md-5.justify-content-center.align-items-center.d-flex
                 a(type="button" data-bs-toggle="modal" data-bs-target="#image-modal")
-                    img.img-fluid.d-flex.rounded.img-thumbnail.shadow(src=food.thumbnail alt=food.name style="height: 20rem;" )
+                    img.img-fluid.d-flex.rounded.img-thumbnail.shadow(src=food.thumbnail alt=food.name style="height: 20rem;" data-bs-toggle="tooltip" data-bs-placement="top" title=food.name)
             .col-md-6.justify-content-center.align-items-center.flex-column.py-2.px-3.px-lg-0
                 h1.pt-5.pt-md-0.text-uppercase=food.name
                 p.h3.bg-light.px-3.py-2.shadow-sm= food.price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})
                 .d-flex.align-items-center
                     span.h4.pe-2 Loại
-                    a.badge.bg-primary.px-3.py-2.text-decoration-none(href="/search?type=" + food.type.code)= food.type.name
+                    a.badge.bg-primary.px-3.py-2.text-decoration-none(href="/search?type=" + food.type.code data-bs-toggle="tooltip" data-bs-placement="top" title="tìm kiếm món ăn theo loại")= food.type.name
                 .mb-2
                     p.h3.px-3.py-2 Mô tả món ăn
                     span= !food.description ? 'Hiện tại món ăn này chưa có mô tả' : food.description
                 hr
                 
-                form.bg-light.px-3.py-2.shadow-sm#order-form(action="/order/buy" method="POST")
+                form.bg-light.px-3.py-2.shadow-sm#order-form(action="/order/buynow" method="GET")
                     .d-flex.align-items-center
                         span.fs-6.px-2 Số lượng
                         .input-group.my-2.w-auto
-                            button.minus.btn.btn-outline-secondary(type='button' data-type='minus' data-field='' onclick='minus()') - 
+                            button.minus.btn.btn-outline-secondary(type='button' data-type='minus' data-field='' onclick='minus()' data-bs-toggle="tooltip" data-bs-placement="top" title="Giảm số lượng") - 
                             input#quantity.btn.btn-outline-secondary.text-center.disabled(type='text' name='quantity' value='1' min='1' style="width:50px")
-                            button.plus.btn.btn-outline-secondary(type='button' data-type='plus' data-field='' onclick='plus()') +
+                            button.plus.btn.btn-outline-secondary(type='button' data-type='plus' data-field='' onclick='plus()' data-bs-toggle="tooltip" data-bs-placement="top" title="Tăng số lượng") +
                     .mt-3
                         button.btn.btn-outline-primary.me-2.rounded-0#add-cart(type='button' data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng") 
                             i.bi.bi-cart-plus-fill.px-2
@@ -67,14 +67,14 @@ block content
         h2 Các món ăn cùng loại
         hr
         div.slick.bg-light
-            each valSimilar in similar
+            each similar in similars
                 .px-2
                     .card(style='margin-bottom:10px;')
-                        img.card-img-top(src=valSimilar.thumbnail alt=valSimilar.name style="height: 200px;")
+                        img.card-img-top(src=similar.thumbnail alt=similar.name style="height: 200px;")
                         .card-body
-                            a.link-secondary.text-decoration-none(href=`/foods/${valSimilar._id}`)
-                                h5.card-title.text-truncate=valSimilar.name
-                            p.card-text=valSimilar.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
+                            a.link-secondary.text-decoration-none(href=`/foods/${similar._id}`)
+                                h5.card-title.text-truncate=similar.name
+                            p.card-text=similar.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})
                             a.btn.btn-primary(href='#') Đặt ngay
     .modal#image-modal
         .modal-dialog.modal-fullscreen-sm-down
@@ -83,4 +83,4 @@ block content
                     h5.modal-title= food.name
                     button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
                 .modal-body.d-flex.justify-content-center
-                    img(src=food.thumbnail)
+                    img(src=food.thumbnail width="100%")

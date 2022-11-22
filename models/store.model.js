@@ -14,8 +14,8 @@ const StoreSchema = new Schema(
 );
 
 StoreSchema.static({
-     createCart: async function () {
-          return this.create({ data: {} });
+     createCart: async function (_id) {
+          return this.create({ data: {}, _id });
      },
      addCart: async function (
           userId,
@@ -50,7 +50,7 @@ StoreSchema.static({
                ignoreModel(["created_at", "updated_at"])
           );
 
-          if (!store) store = await this.createCart(_id);
+          if (!store) store = await Store.createCart(_id);
 
           const foodIds = Object.keys(store.data);
 
@@ -70,7 +70,7 @@ StoreSchema.static({
           return foods;
      },
      clearCart: async function (_id) {
-          return this.deleteOne({ _id });
+          return this.updateOne({ _id }, { $set: { data: {} } });
      },
 });
 

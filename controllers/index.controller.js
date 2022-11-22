@@ -8,7 +8,7 @@ module.exports = {
      homePage: async (req, res, next) => {
           res.locals.seo.title = "Trang Chủ";
           res.locals.seo.description =
-               "Foozie Foods là trang bán và giao đồ ăn online cho tất cả mọi người nhằm phục vụ nhu cầu ăn uống, thuận tiện.";
+               "Foozie Foods, giao đồ ăn trong 5 phút - Nhanh hơn nữa, nhanh hơn nữa - Đặt ngay";
           res.locals.seo.keywords = [
                "Foozie Home",
                "Foozie Foods",
@@ -26,7 +26,7 @@ module.exports = {
           res.locals.seo.description = "Tìm kiếm món ăn trên Foozie Foods";
           res.locals.seo.keywords = [
                "Search Foods",
-               "Tìm kiếm món ăn",
+               "Tìm kiếm món ăn trên Foozie Foods",
                "Search Foozie",
           ];
 
@@ -79,13 +79,14 @@ module.exports = {
           let myVouchers = [];
 
           res.locals.seo.title = "Vouchers";
-          res.locals.seo.description = "Trang nhận khuyến mãi của Foozie Foods";
+          res.locals.seo.description =
+               "Siêu ưu đãi, khuyến mãi khổng lồ khi đặt đồ ăn trên Foozie Foods";
           res.locals.seo.keywords = [
                "Voucher Foozie Foods",
                "Khuyến Mãi",
                "Khuyến mãi Foozie Foods",
                "Vouchers",
-               "Khuyến mãi cho khách hàng ",
+               "Ưu đãi Foozie Foods",
                "Giảm Giá",
           ];
           if (userId)

@@ -158,6 +158,35 @@ footer.dark a {
     font-size: 1.2rem !important;
 }
 
+.voucher-checker {
+    padding: 0.2rem 0.5rem;
+}
+
+.voucher-checker label {
+    cursor: pointer;
+}
+
+.voucher-checker:has(input:checked) {
+    background-color: #efefef;
+    font-weight: bold;
+    border-left-style: outset;
+    border-color: #ccc;
+}
+
+.payment-checker > label {
+    padding: 0rem 0.5rem;
+    cursor: pointer;
+}
+
+.payment-checker:has(input:checked) > label {
+    font-weight: bold;
+}
+
+.payment-checker:has(input:checked) > label {
+    border: solid 1px #aaa;
+    background-color: #f1f1f1;
+}
+
 @media only screen and (max-width: 820px) {
     .menu {
         position: static;

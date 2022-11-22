@@ -91,11 +91,17 @@ module.exports = {
 
           const errors = [];
 
+          if (!req.file) errors.push("Vui lòng tải hình ảnh món ăn...!");
+
           if (!name || !price) errors.push("Vui lòng diền đủ thông tin...!");
 
-          const typeData = await FoodType.findOne({ _id: type });
+          if (type) {
+               const typeData = await FoodType.findOne({ _id: type });
 
-          if (!typeData) errors.push("Loại món ăn không khả dụng...!");
+               if (!typeData) errors.push("Loại món ăn không khả dụng...!");
+          } else {
+               errors.push("Vui lòng phân loại...!");
+          }
 
           res.locals.body = {
                name,

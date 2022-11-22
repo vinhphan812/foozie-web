@@ -17,7 +17,7 @@ const MENU_BY_ROLE = {
      CUSTOMER: [
           {
                name: "Hoạt Động",
-               link: "/orders",
+               link: "/user/orders",
           },
           {
                name: "Ưu Đãi",

@@ -7,16 +7,25 @@ async function changeHandle(e) {
      const input = $("input", $parent);
      const quantity = +input.val();
 
+     changeCart({ food, type });
+}
+
+async function changeCart(body) {
      const data = await (
           await fetch("/api/cart", {
                method: "POST",
                headers: { "Content-Type": "application/json" },
-               body: JSON.stringify({ food, type }),
+               body: JSON.stringify(body),
           })
      ).json();
      if (data.success) {
-          $("#cart-length").text(data.data.length);
-          $("#cart").html(
+          $("#cart-length").text(data.data.length ? data.data.length : "");
+          if (data.data.length) {
+               $(".order-btn").removeClass("d-none");
+          } else {
+               $(".order-btn").addClass("d-none");
+          }
+          $(".cart-list").html(
                data.data.map(
                     (
                          e
@@ -33,7 +42,7 @@ async function changeHandle(e) {
                          <a class="h5 mb-0 text-decoration-none" href="/foods/${
                               e._id
                          }">${e.name}</a>
-                         <div>Đơn giá: ${e.price.toLocaleString("it-IT", {
+                         <div>Đơn giá: ${e.price.toLocaleString("vi", {
                               style: "currency",
                               currency: "VND",
                          })}</div>

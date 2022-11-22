@@ -5,12 +5,17 @@ const {
 const { ROLE } = require("../utils/role.enum");
 const { upload } = require("../configs/uploadFile");
 
-const { userDetails } = require("../controllers/user.controller");
+const {
+     userDetails,
+     historyOrders,
+} = require("../controllers/user.controller");
 
 const router = Router();
 
 router.use(decentralization(ROLE.CUSTOMER));
 
 router.get("/profile", userDetails);
+
+router.get("/orders", historyOrders);
 
 module.exports = router;

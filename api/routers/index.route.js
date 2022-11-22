@@ -1,26 +1,25 @@
 const express = require("express");
 
-const userRoute = require("./user.route");
 const publicRoute = require("./public.route");
-const adminRoute = require("./admin.route");
-const authMiddleware = require("../middlewares/auth.middleware");
+const privateRoute = require("./private.route");
+const authRoute = require("./auth.route");
 
 const router = express.Router();
 
 // public route
 router.use("/", publicRoute);
+router.use("/auth", authRoute);
 
-// authentication middleware
-router.use(authMiddleware);
-router.use("/user", userRoute);
-router.use("/admin", adminRoute);
+// private route
+
+router.use(privateRoute);
 
 router.get("/", function (req, res, next) {
-	res.json({ success: true, message: "route api of Foozie" });
+     res.json({ success: true, message: "route api of Foozie" });
 });
 
 router.use(function (req, res, next) {
-	res.status(404).json({ success: false, message: "API_NOT_FOUND" });
+     res.status(404).json({ success: false, message: "API_NOT_FOUND" });
 });
 
 module.exports = router;

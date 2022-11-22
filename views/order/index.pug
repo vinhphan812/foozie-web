@@ -2,11 +2,25 @@ extend ../layouts/common.pug
 
 block content
      .container.bg-white.shadow-sm.p-4
-          .h2 #{APP_NAME} Thanh Toán
-          hr
+          .h1 
+               i.bi.bi-wallet-fill 
+               span Thanh Toán - Foozie Foods
+     form.container.bg-white.shadow-sm.p-4(action="/order" method="POST")
+          .shadow-sm.bg-light.p-4.d-flex.flex-column.align-items-start.mb-3
+               .mb-2
+                    label.form-label(for="delivery") Địa chỉ nhận hàng
+                    input.form-control(type="text" name="delivery" id="delivery" placeholder="Địa chỉ nhận hàng" required) 
+               .mb-2
+                    label.form-label(for="branch") Chi nhánh
+                    select.form-select(id="branch" name="branch")
+                         each branch in branches
+                              option(value=branch._id)= branch.name 
+               .form-floating.mt-2.w-100
+                    textarea.form-control( placeholder="Viết ghi chú của bạn vào đây" id="note" name="note")
+                    label(for="note") Ghi chú
           .h3 Các món đã chọn
           each val in cart
-               .card.mb-3
+               .card.mb-3.shadow-sm
                     .row.g-0
                          .col-md-4
                               .img-fluid.rounded-start(style=`background-image: url('${val.thumbnail}'); height:100%; background-position: center; background-size: cover;` alt=val.name height="92px")
@@ -21,27 +35,70 @@ block content
                                              .h5.card-text= "x" + val.quantity
                                         .d-flex.align-items-center
                                              .h5.card-text= (val.price * val.quantity).toLocaleString('vi', {style : 'currency', currency : 'VND'})
-          hr
-          .shadow-sm.bg-light.p-4.d-flex.justify-content-between.align-items-center
+          .shadow-sm.bg-light.p-4.d-flex.justify-content-between.align-items-center.mb-3
                .h5.m-0 Foozie Voucher  
-               button.btn.btn-primary(type='button', data-bs-toggle='modal', data-bs-target='#voucherModel') Chọn voucher
+               button.btn.btn-link.voucher-select(type='button', data-bs-toggle='modal', data-bs-target='#voucherModel') Chọn voucher
+          #map
           // Modal
           #voucherModel.modal.fade(tabindex='-1', aria-labelledby='voucherModelLabel', aria-hidden='true')
                .modal-dialog.modal-fullscreen-md-down
                     .modal-content
                          .modal-header
-                              h5#voucherModelLabel.modal-title Chọn Voucher #{APP_NAME}
+                              h5#voucherModelLabel.modal-title Chọn #{APP_NAME} Voucher
                          .modal-body
                               if vouchers.length
-                                   ul 
+                                   div
                                         each voucher in vouchers
-                                             .form-check
-                                                  input.form-check-input(type="radio" name="voucher" id=voucher._id)
-                                                  label.form-check-label(for=voucher._id)= voucher.name
+                                             .form-check.voucher-checker
+                                                  input.form-check-input.d-none(type="radio" name="voucher-selector" id=voucher._id value=voucher._id)
+                                                  label.form-check-label.w-100(for=voucher._id)= voucher.name
                               else 
                                    .h5.text-muted Hiện chưa có voucher nào khả dụng.
                          .modal-footer
                               button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Thoát
-                              button.btn.btn-primary#save-voucher(type='button') Sử dụng
+                              button.btn.btn-primary#save-voucher(type='button' data-bs-dismiss="modal") Sử dụng
+          // default shipping fee
+          input(type="hidden" name="shipping_fee" value=25000)
+          input(type="hidden" name="total" value=total)
+          input(type="hidden" name="voucher" )
+          .card
+               .card-body
+                    .row.mb-2
+                         .col-md-6.d-flex.flex-column.justify-content-between
+                              .h4 Phương thức thanh toán
+                              .mx-4
+                                   .form-check.payment-checker
+                                        input#offline.form-check-input.d-none(type='radio' name='payment_method' value='offline' checked)
+                                        label.form-check-label.d-flex.align-items-center(for='offline')
+                                             i.bi.bi-coin.fs-1.me-2
+                                             span Thanh Toán Khi Nhận Hàng
+
+                                   .form-check.payment-checker
+                                        input#online.form-check-input.d-none(type='radio' name='payment_method' value='online')
+                                        label.form-check-label.d-flex.align-items-center(for='online')
+                                             i.bi.bi-wallet.fs-1.me-2
+                                             span Thanh Toán Bằng Ví / Ngân hàng
+
+                         .col-md-6.d-flex.justify-content-end.align-items-end.flex-column
+                              br
+                              .fs-5.d-flex.justify-content-between.w-100
+                                   span Tổng đơn hàng: 
+                                   span #{total.toLocaleString("vi", {style: "currency",currency: "VND"})}
+                              .fs-5.d-flex.justify-content-between.w-100
+                                   span Phí vận chuyển: 
+                                   span #{25000..toLocaleString("vi", {style: "currency",currency: "VND"})}
+                              .fs-5.d-flex.justify-content-between.w-100.d-none#discount
+                                   span Giảm giá: 
+                                   span 0
+                              .h4.d-flex.justify-content-between.w-100#total
+                                   span Tổng
+                                   span #{(total + 25000).toLocaleString("vi", {style: "currency",currency: "VND"})}
+                    .row.mt-2.align-items-end
+                         .col-md-6
+                              .fs-6 Lưu ý: Bạn phải luôn tuân thủ theo những 
+                                   a(href="") điều khoản Foozie Foods
+                         .col-md-6.d-flex.justify-content-end
+                              button.btn.btn-outline-primary.btn-lg(type="submit" value="submit") Đặt Hàng
+
 block script
      script(src="/public/js/order.js")

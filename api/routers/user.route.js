@@ -8,7 +8,7 @@ const router = express.Router();
 
 //{host}/api/user/
 router.route("/").get(ctrler.getMe).put(ctrler.updateMe);
-router.post("/upload", upload("user").single("avatar"), ctrler.uploadAvatar);
+router.post("/upload", upload("users").single("avatar"), ctrler.uploadAvatar);
 
 router.post("/change-password", changePassword);
 

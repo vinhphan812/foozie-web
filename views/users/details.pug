@@ -8,6 +8,9 @@ block content
                     .rounded-circle.img-thumbnail.w-auto#edit-avatar.user-avatar(style=`background: url("${user.avatar ? user.avatar : "/public/images/assets/user.png"}")` alt=user.last_name + " " + user.first_name)
                     input#img(type='file' name='img' accept='image/*' style="display: none;")
                     .h2.text-center #{user.last_name + " " + user.first_name}
+                    p.text-center.text-muted
+                         img(src=`/public/images/rankings/${user.current_ranking.code.toLowerCase()}.png` alt=user.current_ranking.name width="24px")
+                         button.btn.btn-link(type="button" data-bs-toggle="tooltip" data-bs-placement="top" title=user.current_ranking.description) #{user.current_ranking.name}
                     .h4.text-center.text-muted @#{user.username}
                .row.justify-content-center
                     .col-md-6.container
@@ -19,11 +22,37 @@ block content
                          .row.mb-2
                               input.col-md-6.form-control(type="text" name="phone" placeholder="Số điện thoại" value=user?user.phone : "")
                          .row.mb-2
+                              input.col-md-6.form-control(type="text" name="address" placeholder="Địa chỉ" value=user?user.address : "")
+                         .row.mb-2
                               .col.p-0.pe-md-2.pe-sm-0
                                    input.form-control(type="email" name="email" placeholder="Email" value=user?user.email : "")
                               //- if !user.isVerifyMail
                               .col-md-3.p-0.mt-md-0.mt-2
                                    button.btn.btn-primary.w-100 Xác thực
 
+                         .d-flex.justify-content-center
+                              button.btn.btn-primary 
+                                   span Cập nhật
+
 block script 
      script(src="/public/js/upload-avatar.js")
+     script.
+               async function postImageHandle() {
+                    const inpImg = $("#img")[0];
+                    if(inpImg.files.length) {
+                         const formData = new FormData();
+                         formData.append("avatar", inpImg.files[0]);
+
+                         const res = await (await (fetch(`/api/user/upload`, {method: 'POST',body: formData}))).json();
+
+                         if(res.success) {
+                              document.getElementById("edit-avatar").style = `background-image: url("${res.data.avatar}")`;
+                         } else {
+                              Swal.fire({
+                                   icon: 'error',
+                                   title: 'Oops...',
+                                   text: "Xảy ra lỗi trong quá trình upload file",
+                                   });
+                         }
+                    }
+               }

@@ -1,18 +1,14 @@
 const axios = require("axios");
 const { createHmac } = require("crypto");
 const moment = require("moment");
-const { resolve } = require("path");
-
-const test_redirect_path = "";
-
-const host = "https://sb-openapi.zalopay.vn/v2";
+const {
+     zalopay_callback,
+     zalopay_host: host,
+     zalopay_config_app,
+} = require("../configs/zalopay.config");
 
 class Zalopay {
-     static config = {
-          appid: 2553,
-          key1: "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL",
-          key2: "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz",
-     };
+     static config = zalopay_config_app;
 
      static Hmac(data, key) {
           return createHmac("sha256", key).update(data).digest("hex");
@@ -57,32 +53,53 @@ class Zalopay {
           });
      }
 
-     static createOrder(order, amount = 10000) {
-          const app_time = new Date().getTime();
-          const item = JSON.stringify(order.details.map(detail)),
-               app_user = "ZaloPayDemo",
-               app_trans_id =
-                    moment(app_time).format("YYMMDD") + "_" + order._id,
-               embed_data = JSON.stringify({}),
-               dataString = `${this.config.appid}|${app_trans_id}|${app_user}|${amount}|${app_time}|${embed_data}|${item}`,
-               mac = this.Hmac(dataString, this.config.key1);
+     static createOrder(order, hostcb) {
+          return new Promise((resolve, reject) => {
+               const app_time = new Date().getTime();
+               const item = JSON.stringify(
+                         order.details.map((detail) => ({
+                              itemid: detail._id,
+                              itename: detail.name,
+                              itemprice: detail.price,
+                              itemquantity: detail.quantity,
+                         }))
+                    ),
+                    callback_url = `https:\/\/${hostcb}${zalopay_callback}`,
+                    app_user = "Foozie Foods",
+                    app_trans_id =
+                         moment(app_time).format("YYMMDD") + "_" + order._id,
+                    embed_data = JSON.stringify({
+                         redirecturl: callback_url,
+                    }),
+                    dataString = `${this.config.appid}|${app_trans_id}|${app_user}|${order.total}|${app_time}|${embed_data}|${item}`,
+                    mac = this.Hmac(dataString, this.config.key1);
 
-          const data = {
-               app_id: this.config.appid,
-               app_user,
-               app_trans_id,
-               app_time,
-               amount,
-               item,
-               description: `Foozie Foods - Thanh Toán Đơn Hàng #${order._id}`,
-               embed_data,
-               bank_code: "zalopayapp",
-               dataString,
-               mac,
-          };
-          console.log(data);
-          axios({ url: host + "/create", method: "POST", data }).then((res) => {
-               console.log(res);
+               const data = {
+                    title: "Thanh Toán Hóa Đơn Foozie Foods",
+                    app_id: this.config.appid,
+                    app_user,
+                    merchant_name: "Foozie Foods",
+                    app_trans_id,
+                    app_time,
+                    amount: order.total,
+                    item,
+                    description: `Foozie Foods - Thanh Toán Đơn Hàng #${order._id}`,
+                    title: "Thanh Toán Foozie Foods",
+                    embed_data,
+                    callback_url,
+                    bank_code: "",
+                    dataString,
+                    mac,
+               };
+
+               console.log(data);
+
+               axios({ url: host + "/create", method: "POST", data }).then(
+                    ({ data }) => {
+                         console.log(data);
+                         resolve(data);
+                    }
+               );
           });
      }
 }

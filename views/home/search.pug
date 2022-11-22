@@ -30,14 +30,11 @@ block content
                                                   .card-body
                                                        a.link-secondary.text-decoration-none(href=`/foods/${food._id}`)
                                                             h5.card-title=food.name
-                                                       p.card-text=food.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
-                                                       a.btn.btn-outline-primary.buy(food-id=food._id) Đặt ngay
+                                                       p.card-text=food.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+                                                       a.btn.btn-outline-primary.buy(href="/order/buynow?food=" + food._id) Đặt ngay
                     else 
                          .d-flex.justify-content-center.align-items-center.h-100
                               .h1.text-muted Không tìm thấy kết quả nào...!
-     form(action="/order/buy" method="POST" name="buy").d-none
-          input(name="food" value="")
-
 
 
 

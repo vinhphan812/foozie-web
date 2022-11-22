@@ -9,7 +9,7 @@ module.exports = {
 
           if (!food) return next();
 
-          const similarFood = await Food.find({ type: food.type });
+          const similars = await Food.find({ type: food.type });
           const comments = await Comment.find({ food: food._id }).populate(
                "user",
                ["first_name", "last_name", "avatar"]
@@ -30,7 +30,7 @@ module.exports = {
           if (food.description) res.locals.seo.keywords.push(food.description);
 
           res.locals.food = food || undefined;
-          res.locals.similar = similarFood || undefined;
+          res.locals.similars = similars;
           res.locals.comments = comments;
           res.render("home/food");
      },

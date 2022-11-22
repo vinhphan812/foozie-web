@@ -1,0 +1,15 @@
+extend ../layouts/common.pug
+
+block content
+     .p-5.shadow-sm.min-3.d-flex.flex-column.align-items-center.justify-content-between.alert(class=(status == "1" ? "alert-success" : "alert-danger"))
+          i.bi(style="font-size: 4rem;" class=status=="1" ? "bi-check-circle" : "bi-exclamation-triangle")
+          .h1.text-center.mb-5
+               div Thanh toán đơn hàng  
+               div ##{orderId}
+               div #{status == "1" ? "thành công" : "thất bại...!"}
+          if status != "1"
+               .text-muted.text-center.mb-2
+                    span Trong trường hợp bạn đã thanh toán cho chúng tôi
+                    br
+                    span Nhưng hệ thống báo thất bại, xin hãy chat với chúng tôi để được giải quyết nhanh nhất 
+          a.btn.btn-outline-primary(href="/") Quay lại trang chủ

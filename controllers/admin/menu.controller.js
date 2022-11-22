@@ -34,9 +34,28 @@ module.exports = {
           res.redirect("/admin/menu/");
      },
      createPage: async (req, res, next) => {
-          res.locals.title = "Tạo Món ăn";
+          res.locals.seo.title = "Tạo Món ăn";
           res.locals.isCreate = true;
+
+          res.locals.types = await getFoodType();
+
           res.render("admin/menu/food");
      },
-     createFoodHandler: async (req, res, next) => {},
+     createFoodHandler: async (req, res, next) => {
+          const { errors, body } = res.locals;
+
+          if (errors.length) {
+               res.locals.seo.title = "Tạo Món ăn";
+               res.locals.isCreate = true;
+               res.locals.types = await getFoodType();
+
+               return res.render("admin/menu/food");
+          }
+
+          body.thumbnail = "/" + req.file.path.split("\\").join("/");
+
+          await Food.create(body);
+
+          res.redirect("/admin/menu/");
+     },
 };

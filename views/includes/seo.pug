@@ -1,17 +1,17 @@
 if seo
   if seo.title
-    meta(name="title" content=seo.title + " " + APP_NAME )
+    meta(name="title" content=seo.title + " - " + APP_NAME )
   title #{seo.title} - #{APP_NAME}
   meta(name="robots" content="noodp,index,follow")
-  if seo.description
-    meta(name="description" content=seo.description)
+  meta(name="description" content=seo.title + (seo.description ? " - " + seo.description : ""))
   if seo.keywords
     meta(name="keywords" content=seo.keywords.join(','))
   meta(name="revisit-after" content="1 days")
   meta(http-equiv="content-language" content="vi")
   meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
   meta(name="google" content="nositelinkssearchbox")
-  meta(property="og:title" content=seo.title ? seo.title : `${APP_NAME} - vinhphancommunity`)
+  meta(name="author" content="Phan Thanh Vinh - vinhphancommunity")
+  meta(property="og:title" content=seo.title ? seo.title + APP_NAME : `${APP_NAME} - vinhphancommunity`)
   meta(property="og:site_name" content="vinhhphancommunity")
   meta(property="og:locale" content="vi")
   if seo.url

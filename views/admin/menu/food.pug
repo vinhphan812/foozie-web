@@ -3,15 +3,15 @@ extend ../../layouts/common.pug
 block content
      //- code= body
      .row.justify-content-center
-          form.col-md-12.col-xl-6(action=`/admin/menu/${isCreate ? "create" : body.id + "/update"}` method="POST" id=isCreate ? "create" : "edit").bg-white.p-5.shadow-sm
+          form.col-md-12.col-xl-6.bg-white.p-5.shadow-sm(action=`/admin/menu/${isCreate ? "create" : body.id + "/update"}` method="POST" id=isCreate ? "create" : "edit" enctype="multipart/form-data")
                if errors && errors.length
                     each val in errors
                          .alert.alert-danger.mx-5= val
                .h2.text-center= isCreate ? "Thêm Món Ăn" : "Chỉnh Sửa Món Ăn"
                .row.justify-content-center.my-5
                     //- .img-thumbnail.w-auto#edit-avatar.p-5
-                    img.user-avatar.img-thumbnail#edit-avatar(src=body ? body.thumbnail : "/public/images/assets/image.png" alt=body ? body.name : "" style="object-fit: contain")
-                    input#img(type='file' accept='image/*' style="display: none;")
+                    img.user-avatar.img-thumbnail#edit-avatar(src=body && body.thumbnail ? body.thumbnail : "/public/images/assets/image.png" alt=body ? body.name : "" style="object-fit: contain")
+                    input#img(type='file' accept='image/*' style="display: none;" name="image")
                .mb-3
                     label.form-label(for='name') Tên Món Ăn
                     input#name.form-control(type='text' name="name" placeholder="Tên món ăn" value= body? body.name : "")
@@ -34,21 +34,8 @@ block content
                     input.btn.btn-primary.px-5(type='submit' value=isCreate ? "Tạo" : "Lưu")
 
 block script 
-     script(src="/public/js/upload-avatar.js")
-     if isCreate
-
+     script(type="text/javascript" src="/public/js/upload-avatar.js")
+     if !isCreate
+          script(type="text/javascript" src="/public/js/editFood.js")
      else 
-          script.
-               async function postImageHandle() {
-                    const inpImg = $("#img")[0];
-                    if(inpImg.files.length) {
-                         const formData = new FormData();
-                         formData.append("image", inpImg.files[0]);
-
-                         const res = await (await (fetch(`/api/admin/foods/#{body.id}/upload`, {method: 'POST',body: formData}))).json();
-
-                         if(res.success) {
-                              document.getElementById("edit-avatar").src = res.data;
-                         }
-                    }
-               }
+          script(type="text/javascript" src="/public/js/createFood.js")
