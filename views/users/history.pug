@@ -12,7 +12,7 @@ block content
                               .card-body
                                    .row.align-items-center
                                         .col-md-6.d-flex.flex-column.small
-                                             a(href="/orders/" + order.id).link-secondary.card-title ##{order.id}
+                                             a(href="/user/orders/" + order.id).link-secondary.card-title ##{order.id}
                                              p.card-text.h6.text-muted #{order.branch.name} > #{order.delivery}
                                              p.card-text.text-muted.small= moment(order.order_date).format(((new Date() - order.order_date) / (1000 * 60 * 60 * 24)) >= 1 ? "DD-MM-yyyy hh:mm" : "hh:mm")
                                         .col-md-6.d-flex.align-items-center.justify-content-between
@@ -21,4 +21,3 @@ block content
                                                   img(src=`/public/images/assets/payment-${order.payment_method == "PAYMENT" ? "online" : "cod"}.png` width="48px" data-bs-toggle="tooltip" data-bs-placement="bottom" title=payment_term[order.payment_method])
                                                   .h5.card-text= status_pay_term[order.payment_status]
                                              .h5.card-text= order.total.toLocaleString('vi', {style : 'currency', currency : 'VND'})
-               //- code= order

@@ -8,12 +8,11 @@ const BranchesRoute = require("./branches.route");
 const UsersRoute = require("./users.route");
 const MenuRoute = require("./menu.route");
 const OrdersRoute = require("./orders.route");
-const ChatsRoute = require("./chat.route");
 const { index } = require("../../controllers/admin/index.controller");
 
 const router = new Router();
 
-router.use(decentralization(ROLE.ADMIN));
+router.use(decentralization(ROLE.MANAGER));
 
 router.use("/branches", BranchesRoute);
 
@@ -22,7 +21,6 @@ router.use("/users", UsersRoute);
 router.use("/menu", MenuRoute);
 
 router.use("/orders", OrdersRoute);
-router.use("/chats", ChatsRoute);
 
 router.get("/", index);
 

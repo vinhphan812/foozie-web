@@ -10,9 +10,15 @@ const mongoose = require("mongoose");
 const Store = require("./store.model");
 const OrderDetail = require("./order_detail.model");
 const Voucher = require("./voucher.model");
-const Food = require("./food.model");
+const moment = require("moment");
 
 const { Schema } = mongoose;
+
+const nextStatusOrder = {
+     PENDING: "PREPARE",
+     PREPARE: "SHIPPING",
+     SHIPPING: "DONE",
+};
 
 const OrderSchema = new Schema(
      {
@@ -134,8 +140,30 @@ OrderSchema.static({
 
           return orders;
      },
+     getOrderDoneOrCancel: async function (branch) {
+          const orders = await this.find({
+               ...(branch ? { branch: branch } : {}),
+               status: { $in: ["DONE", "CANCEL"] },
+          }).sort({ order_date: -1 }).populate(["user", "branch"]);
+
+          return orders;
+     },
+     getOrderPendingWithDetais: async function (branch) {
+          const orders = await this.find({
+               ...(branch ? { branch: branch } : {}),
+               status: { $nin: ["DONE", "CANCEL"] },
+          }).sort({ order_date: -1 });
+
+          for (const order of orders) {
+               const details = await OrderDetail.getDetails(order.id);
+               order._doc.details = details;
+               order.details = details;
+          }
+
+          return orders;
+     },
      getOrderDetail: async function (_id) {
-          const order = await this.findOne({ _id }).populate("branch");
+          const order = await this.findOne({ _id }).populate(["branch", "user"]);
           const data = await OrderDetail.find(
                { order_id: order.id },
                ignoreModel(["created_at", "updated_at", "order_id", "_id"])
@@ -146,6 +174,40 @@ OrderSchema.static({
           });
           order.details = order._doc.details;
           return order;
+     },
+     nextStatus: async function (_id, isCancel = false) {
+          const order = await this.findOne({ _id });
+
+          if (order.status === "DONE" || order.status === "CANCEL")
+               return order.status;
+
+          order.status = isCancel ? "CANCEL" : nextStatusOrder[order.status];
+
+          await order.save();
+
+          return order.status;
+     },
+     getTotal: function (branch) {
+          const current = moment().format("yyyy-MM-DD");
+          return this.aggregate([
+               {
+                    $match: {
+                         ...(branch ? { branch: branch } : {}),
+                         updated_at: {
+                              $gte: new Date(current + " 00:00:00"),
+                              $lte: new Date(current + " 23:59:59"),
+                         },
+                    },
+               },
+               {
+                    $group: {
+                         _id: null,
+                         total: { $sum: "$total" },
+                         foods: { $sum: "$total_foods" },
+                         shipping: { $sum: "$shipping_fee" },
+                    },
+               },
+          ]);
      },
 });
 

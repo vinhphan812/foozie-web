@@ -24,7 +24,10 @@ const MENU_BY_ROLE = {
                link: "/vouchers",
           },
      ],
-     MANAGER: [{ name: "Dashboard", link: "/admin" }],
+     MANAGER: [
+         { name: "Tổng quan", link: "/admin" },
+         { name: "Đơn Hàng", link: "/admin/orders" }
+     ],
 };
 
 module.exports = { ROLE, PERMISSIONS, MENU_BY_ROLE };

@@ -91,7 +91,7 @@ module.exports = {
 
           const errors = [];
 
-          if (!req.file) errors.push("Vui lòng tải hình ảnh món ăn...!");
+          if (!req.file && /create/g.test(req.url)) errors.push("Vui lòng tải hình ảnh món ăn...!");
 
           if (!name || !price) errors.push("Vui lòng diền đủ thông tin...!");
 

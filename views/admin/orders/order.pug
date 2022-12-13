@@ -1,0 +1,72 @@
+extends ../../layouts/common.pug
+block content
+    .bg-white.shadow.px-3.py-4.my-2
+        .container
+            .row.align-items-center
+                .col-md-5.m-2.px-2.py-3
+                    .h4= order.branch.name
+                    a.h6.text-muted(href="tel:" + order.branch.phone) #{order.branch.phone}
+                    .h6.text-muted #{order.branch.address}
+                .col.md-2.d-flex.justify-content-center.flex-column.align-items-center
+                    i.bi.bi-arrow-right.fs-1
+                    p Giao tới
+
+                .col.md-5.m-2.px-2.py-3
+                    .h4 #{order.user.first_name} #{order.user.last_name}
+                    a.h6.text-muted(href="tel:" + order.user.phone) #{order.user.phone}
+                    .h6.text-muted #{order.delivery}
+            .d-flex.justify-content-center #{moment(order.order_date).format("HH:mm DD-MM-YYYY")}
+            .d-flex.justify-content-between.align-items-center
+                each item, index in status_step
+                    if index > 0
+                        .line(class=`${status_level[order.status] >= status_level[item.status] && status_level[item.status] - 1 > -1 ? "bg-success" : "bg-muted" }`)
+                    .d-flex.justify-content-center.align-items-center(style="width: 48px; height: 48px;" id=item.status class=`${order.status == "CANCEL" && order.status == item.status ? "text-danger" : status_level[order.status] >= status_level[item.status] && status_level[item.status] > -1 ? "text-success" : "text-muted"}`)
+                        if status_level[order.status] == status_level[item.status]
+                            i.bi.bi-chevron-compact-left.fs-4
+                        i.bi.fs-1(class=`bi-${item.icon}` data-bs-toggle="tooltip" data-bs-placement="bottom" title=status_term[item.status])
+                        if status_level[order.status] == status_level[item.status]
+                            i.bi.bi-chevron-compact-right.fs-4
+            hr
+            .h2 Chi tiết đơn hàng
+            table.table.inactive.text-end
+                thead
+                    tr
+                        th #
+                        th Tên món
+                        th Đơn giá
+                        th Số lượng
+                        th Thành tiền
+                tbody
+                    each item, index in order.details
+                        tr
+                            td #{index + 1}
+                            td #{item.name}
+                            td #{item.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+                            td #{item.quantity}
+                            td #{(item.price * item.quantity).toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+            hr
+            .row
+                .col-md-5.d-flex.justify-content-between.flex-column.border-end
+                        .h5.d-flex.justify-content-between
+                            .text-muted Trạng thái thanh toán:
+                            span #{status_pay_term[order.payment_status]}
+                        .h5.d-flex.justify-content-between
+                            .text-muted Phương thức thanh toán:
+                            span #{payment_term[order.payment_method]}
+                        .h5.d-flex.justify-content-between
+                            .text-muted Trạng thái đơn hàng:
+                            span #{status_term[order.status]}
+                .col.md-5
+                    .h5.d-flex.justify-content-between
+                        .text-muted Tổng tiền thức ăn:
+                        .total-food #{order.total_foods.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+                    .h5.d-flex.justify-content-between
+                        .text-muted Phí vận chuyển
+                        .shipping-fee #{order.shipping_fee.toLocaleString('vi', {style : 'currency', currency : 'VND'})}
+                    if order.total != (order.total_foods + order.shipping_fee)
+                        .h5.d-flex.justify-content-between
+                            .text-muted Tổng
+                            .total #{(order.total - order.total_foods - order.shipping_fee).toLocaleString('vi', { style: 'currency', currency: 'VND' })}
+                    .h5.d-flex.justify-content-between
+                        .text-muted Tổng
+                        .total #{order.total.toLocaleString('vi', {style : 'currency', currency : 'VND'})}

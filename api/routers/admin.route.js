@@ -13,7 +13,7 @@ const {
 
 const router = new Router();
 
-router.use(decentralizationAPI(ROLE.ADMIN));
+router.use(decentralizationAPI(ROLE.MANAGER));
 
 router.route("/users/:id").all(idValidate).delete(deleteUser);
 router.route("/branches/:id").all(idValidate).delete(deleteBranch);

@@ -1,4 +1,3 @@
-const chatInit = require("./chat.socket");
 const adminInit = require("./admin.socket");
 /**
  * Message For Chat Formatter
@@ -21,6 +20,5 @@ module.exports = (io) => {
           console.log(err.context);
      });
 
-     chatInit(io);
      adminInit(io);
 };

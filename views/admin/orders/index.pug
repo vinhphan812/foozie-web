@@ -1,4 +1,38 @@
 extend ../../layouts/common.pug
 
 block content
-     table.table
+     .bg-white.shadow.px-3.py-4.my-2
+          .h2 Quản lý đơn hàng #{branch ? branch.name : APP_NAME}
+          table.table
+               thead
+                    tr
+                         th Mã đơn hàng
+                         th Ngày đặt hàng
+                         th Trạng thái đơn hàng
+                         th Trạng thái thanh toán
+                         th PTTT
+                         th Địa chỉ nhận hàng
+                         th Người đặt hàng
+                         if user.role == "ADMIN"
+                              th Chi nhánh
+                         th Số tiền
+               tbody
+                    if orders && orders.length
+                         each order in orders
+                              tr
+                                   td
+                                        a(href="/admin/orders/"+order.id) ##{order.id}
+                                   td= moment(order.order_date).format("HH:mm DD/MM/YYYY")
+                                   td= status_term[order.status]
+                                   td
+                                        img(src=`/public/images/assets/payment-${ order.payment_method == "PAYMENT" ? "online" : "cod" }.png` width="100%" data-bs-toggle="tooltip" data-bs-placement="bottom" title=payment_term[order.payment_method])
+                                   td= payment_term[order.payment_method]
+                                   td= order.delivery
+                                   td
+                                        a(href="/admin/users/"+order.user.id + "/update") #{order.user.first_name} #{order.user.last_name}
+                                   if user.role == "ADMIN"
+                                        td
+                                             a(href="/admin/branches/"+order.branch.id+"/update")= order.branch.name
+                                   td= order.total.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+                    else
+                         .h2 Hiện chưa có đơn hàng nào...!

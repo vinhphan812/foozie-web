@@ -27,7 +27,7 @@ module.exports = {
                res.render("users/sign_in", { errors });
           } else {
                res.cookie("userId", userData.id, { signed: true });
-               res.redirect(userData.role == "ADMIN" ? "/admin" : "/");
+               res.redirect(userData.role == "CUSTOMER" ? "/" : "/admin");
           }
      },
 

@@ -1,28 +1,82 @@
 extend ../layouts/common.pug
 
 block content 
-     .h2.mb-4 Quản Lý
-     if role == "ADMIN"
-          .row.mb-4
+     .d-flex.flex-column.align-items-center.bg-white.shadow.px-3.py-4.my-2
+          .h4 Doanh Thu #{branch ? branch.name : APP_NAME}
+          .h5 #{moment().format("DD/MM/YYYY")}
+          .h1.text-center= totals.total.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})
+          .d-flex.justify-content-between.w-100
+               .h3.flex-grow-1.text-center
+                    span.text-muted Món ăn: 
+                    span= totals.foods.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})
+               .h3.flex-grow-1.text-center
+                    span.text-muted Giao hàng: 
+                    span= totals.shipping.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})
+     .bg-white.shadow.p-5.my-5
+          .h2.mb-4 Quản Lý
+          if role == "ADMIN"
+               .row.mb-4
+                    .col-sm-6.mb-2
+                         a.card.text-decoration-none(href="/admin/branches")
+                              .card-body
+                                   h5.card-title Chi Nhánh
+                                   p.card-text.text-muted Quản lý chi nhánh cho Foozie Foods
+                    .col-sm-6
+                         a.card.text-decoration-none(href="/admin/users")
+                              .card-body
+                                   h5.card-title Người Dùng
+                                   p.card-text.text-muted Quản lý người dùng trên Foozie Foods
+          .row
                .col-sm-6.mb-2
-                    a.card.text-decoration-none(href="/admin/branches")
+                    a.card.text-decoration-none(href="/admin/menu")
                          .card-body
-                              h5.card-title Chi Nhánh
-                              p.card-text.text-muted Quản lý chi nhánh cho Foozie Foods
+                              h5.card-title Menu
+                              p.card-text.text-muted Quản lý danh sách món ăn trên Foozie Foods
                .col-sm-6
-                    a.card.text-decoration-none(href="/admin/users")
+                    a.card.text-decoration-none(href="/admin/orders")
                          .card-body
-                              h5.card-title Người Dùng
-                              p.card-text.text-muted Quản lý người dùng trên Foozie Foods
-     .row
-          .col-sm-6.mb-2
-               a.card.text-decoration-none(href="/admin/menu")
-                    .card-body
-                         h5.card-title Menu
-                         p.card-text.text-muted Quản lý danh sách món ăn trên Foozie Foods
-          .col-sm-6
-               a.card.text-decoration-none(href="/admin/orders")
-                    .card-body
-                         h5.card-title Đơn Đặt Hàng
-                         p.card-text.text-muted Quản lý đơn đặt hàng trên Foozie Foods
-                         
+                              h5.card-title Đơn Đặt Hàng
+                              p.card-text.text-muted Quản lý đơn đặt hàng trên Foozie Foods
+     .w-100.p-5.bg-white.shadow 
+          .h2 Đơn hàng
+          hr
+          ul.list-group#order-list
+               .d-flex.justify-content-center.align-items-center.w-100.loading
+                    .spinner-border(role='status')
+                         span.visually-hidden Loading...
+               //- each order in orders
+                    .card.mb-3.shadow-s(id=order._id)
+                         .row.g-0
+                              .col-md-1
+                                   .d-flex.justify-content-center.align-items-center.h-100
+                                        i.bi.bi-box2-heart.fs-1
+                              .col-md-11.d-flex.align-items-center
+                                   .card-body
+                                        .row.align-items-center
+                                             .col-md-5.d-flex.flex-column.small
+                                                  a(href="/orders/" + order.id).link-secondary.card-title ##{order.id}
+                                                  p.card-text.h6 
+                                                       span.text-muted Giao tới: 
+                                                       span #{order.delivery}
+                                                  p.card-text.text-muted.small= moment(order.order_date).format(((new Date() - order.order_date) / (1000 * 60 * 60 * 24)) >= 1 ? "DD-MM-yyyy hh:mm" : "hh:mm")
+                                             .col-md-7.d-flex.align-items-center.justify-content-between
+                                                  .d-flex(order-id=order._id)
+                                                       button.btn.btn-danger.me-2.cancel-status Hủy
+                                                       button.btn.btn-outline-primary.update-status= status_button_term[order.status]
+                                                  .h5.card-text.d-flex.flex-column.align-items-center
+                                                       img(src=`/public/images/assets/payment-${order.payment_method == "PAYMENT" ? "online" : "cod"}.png` width="48px" data-bs-toggle="tooltip" data-bs-placement="bottom" title=payment_term[order.payment_method])
+                                                       .h5.card-text= status_pay_term[order.payment_status]
+                                                  .h5.card-text= order.total.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+                                        .row
+                                             ul.list-group
+                                                  each item of order.details
+                                                       li.list-group-item
+                                                            a.text-link(href="/foods/" + item._id)= item.name
+                                                            span  x #{item.quantity}
+block script
+     script(type="text/javascript" src="/public/js/admin.js")
+     script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js")
+     script.
+          const button_status_term = JSON.parse('!{JSON.stringify(status_button_term)}');
+          const payment_term = JSON.parse('!{JSON.stringify(payment_term)}');
+          const status_pay_term = JSON.parse('!{JSON.stringify(status_pay_term)}')

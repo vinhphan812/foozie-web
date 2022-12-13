@@ -50,7 +50,7 @@ module.exports = {
                     order,
                     req.headers.host != "localhost:3000"
                          ? req.headers.host
-                         : "4656-2405-4803-c643-ad00-51d6-5c4d-1baa-2634.ngrok.io"
+                         : "5f97-2405-4803-c643-ad00-8d82-3fe5-8503-46b6.ngrok.io"
                );
                if (data.return_code == 1) {
                     return res.redirect(data.order_url);

@@ -16,3 +16,8 @@ async function postImageHandle() {
           }
      }
 }
+
+document.forms[0].onsubmit = () => {
+     document.getElementById("img").remove();
+     return true;
+}

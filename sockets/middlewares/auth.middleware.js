@@ -1,22 +1,10 @@
-const { Chat, User } = require("../../models");
+const { Chat, User, Branch } = require("../../models");
 const { SECRET_KEY } = process.env;
 
 const { ROLE } = require("../../utils/role.enum");
 
 const cookieParser = require("cookie-parser");
 const cookie = require("cookie");
-
-async function createRoom(user) {
-     return await Chat.create({
-          ...(user._id
-               ? { user: user._id }
-               : {
-                      name: user.name,
-                      phone: user.phone,
-                      email: user.email,
-                 }),
-     });
-}
 
 module.exports = {
      adminAuth: async (socket, next) => {
@@ -40,40 +28,14 @@ module.exports = {
                socket.disconnect();
                return;
           }
+
+          socket.data.user = user;
+
+          if (user.role == ROLE.MANAGER) {
+               socket.data.branch = await Branch.findOne({ manager: user._id });
+          }
+
           console.log("auth done");
-          next();
-     },
-     userAuth: async (socket, next) => {
-          const { id, name, phone, email } = socket.request._query;
-          if (!(name && phone && email) && !id) {
-               next(new Error("User Not Detect"));
-          }
-
-          if (id) {
-               const user = await User.findOne({ _id: id });
-               if (!user) {
-                    next(new Error("User Not Found"));
-               }
-               socket.data.user = {
-                    ...user._doc,
-                    name: user.last_name + " " + user.first_name,
-               };
-          } else {
-               socket.data.user = { name, phone, email };
-          }
-
-          const chatRoom = await Chat.findOne({
-               ...(id
-                    ? { user: id }
-                    : { $or: [{ name }, { phone }, { email }] }),
-          });
-
-          if (chatRoom) {
-               socket.data.room = chatRoom;
-          } else {
-               socket.data.room = await createRoom(socket.data.user);
-          }
-
           next();
      },
 };
