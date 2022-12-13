@@ -31,7 +31,7 @@ const SocketInit = require("./sockets");
 const { SECRET_KEY } = process.env;
 
 // get PORT
-const PORT = process.env.port || 3010;
+const PORT = process.env.port || 3000;
 
 // init app
 const app = express();
