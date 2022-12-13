@@ -4,21 +4,18 @@ block content
      .d-flex.justify-content-center.align-items-center.flex-column
      #carouselExampleCaptions.carousel.slide(data-bs-ride='carousel')
           .carousel-indicators
-               button.active(type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide-to='0' aria-current='true' aria-label='Slide 1')
-               button(type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide-to='1' aria-label='Slide 2')
-               button(type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide-to='2' aria-label='Slide 3')
+                each food, index in foods
+                    button(type='button' class=index == 0 ? "active" : "" data-bs-target='#carouselExampleCaptions' aria-current=index==0 data-bs-slide-to=index aria-label=food.name)
+
+
           .carousel-inner
-               a.carousel-item.active(href="#")
-                    img.d-block.w-100(src='/public/images/assets/bo-kho-bg.jpg' alt='...')
-                    .carousel-caption.d-none.d-md-block
-                         h5 First slide label
-                         p Some representative placeholder content for the first slide.
-               a.carousel-item(href="#")
-                    img.d-block.w-100(src='/public/images/assets/pho-ga-bg.jpg' alt='...')
-                    .carousel-caption.d-none.d-md-block
-                         h5 Second slide label
-                         p Some representative placeholder content for the second slide.
-               
+               each food, index in foods
+                    a.carousel-item(href="/foods/" + food.id class=index==0 ? "active" : "")
+                         img.d-block.w-100(src=food.thumbnail alt=food.name style="height: 35rem")
+                         .carousel-caption.d-none.d-md-block
+                              h5 #{food.name}
+                              p #{food.description}
+
           button.carousel-control-prev(type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide='prev')
                span.carousel-control-prev-icon(aria-hidden='true')
                span.visually-hidden Previous

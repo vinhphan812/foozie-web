@@ -4,6 +4,7 @@ const {
      Voucher,
      VirtualDisplayVoucher,
 } = require("../models/index");
+const { getFoodType } = require("../utils/redis");
 module.exports = {
      homePage: async (req, res, next) => {
           res.locals.seo.title = "Trang Chủ";
@@ -15,8 +16,9 @@ module.exports = {
                "Food Delivery",
           ];
 
-          const foodTypes = await FoodType.find({});
+          const foodTypes = await getFoodType();
           res.locals.foodTypes = foodTypes || [];
+          res.locals.foods = await Food.find({}).sort({ description: -1}).limit(5);
 
           res.render("home/index");
           res.end();
