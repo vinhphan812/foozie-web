@@ -64,7 +64,7 @@ module.exports = {
                       }
                     : {}),
                ...(typeIds.length ? { type: { $in: typeIds } } : {}),
-          });
+          }).sort({price: -1});
 
           console.log(foods);
 

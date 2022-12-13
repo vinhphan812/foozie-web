@@ -28,4 +28,4 @@ form.d-flex(method='POST' action='/foods/' + food._id + "/comment" id="comment")
                     span.icon &starf;
                     span.icon &starf;
         input.form-control(type='text' name="comment" placeholder=`Hãy viết đánh giá về món "${food.name}"` aria-label='comment')
-        button.btn.btn-outline-primary#comment(type='submit' food-id=food.id) Đăng
+        button.btn.btn-outline-primary#comment-btn(type='submit' food-id=food.id) Đăng

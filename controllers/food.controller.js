@@ -9,7 +9,7 @@ module.exports = {
 
           if (!food) return next();
 
-          const similars = await Food.find({ type: food.type });
+          const similars = await Food.find({ type: food.type }).sort({price: -1});
           const comments = await Comment.find({ food: food._id }).populate(
                "user",
                ["first_name", "last_name", "avatar"]
