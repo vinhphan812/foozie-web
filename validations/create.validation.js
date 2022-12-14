@@ -11,6 +11,7 @@ module.exports = {
                phone,
                role,
                gender,
+               address
           } = req.body;
 
           const errors = [];
@@ -22,7 +23,8 @@ module.exports = {
                !email ||
                !phone ||
                !role ||
-               !gender
+               !gender ||
+               !address
           )
                errors.push("Vui lòng điền đầy đủ thông tin...!");
 
@@ -50,6 +52,7 @@ module.exports = {
                phone,
                role,
                gender,
+               address,
                password: "12345678",
           };
 

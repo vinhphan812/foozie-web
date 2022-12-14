@@ -6,6 +6,12 @@ module.exports = {
           res.locals.seo.title = "Hồ Sơ Của Tôi";
           res.render("users/details");
      },
+     userUpdate: async  (req, res, next) => {
+          const { user } = res.locals;
+          const { password, role, ...body } = req.body;
+          await User.updateOne({ _id: user.id }, { $set: body } )
+          res.redirect("/user/profile");
+     },
      historyOrders: async (req, res, next) => {
           const { user } = res.locals;
           res.locals.seo.title = "Lịch Sử Hoạt Động";

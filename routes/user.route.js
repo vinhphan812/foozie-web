@@ -7,7 +7,7 @@ const { upload } = require("../configs/uploadFile");
 
 const {
      userDetails,
-     historyOrders, orderDetails,
+     historyOrders, orderDetails, userUpdate,
 } = require("../controllers/user.controller");
 const IdValidation = require("../validations/id.validation");
 
@@ -16,6 +16,8 @@ const router = Router();
 router.use(decentralization(ROLE.CUSTOMER));
 
 router.get("/profile", userDetails);
+
+router.post("/update", userUpdate)
 
 router.get("/orders", historyOrders);
 

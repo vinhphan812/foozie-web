@@ -25,7 +25,9 @@ block content
                                         input.form-check-input(type="radio" id="female" name="gender" value="female")
                                         label.form-check-label(for="female") Nữ
                          .row.mb-2
-                              input.col-md-6.form-control(type="email" name="email" placeholder="Email" value=body?body.email : "")
+                              input.col-md-6.form-control(type="text" name="address" placeholder="Địa chỉ" value=body?body.address : "")
+                         .row.mb-2
+                              input.col-md-6.form-control(type="email" name="email" placeholder="Email" value=body ? body.email : "")
                          .row.mb-2
                               input.col-md-6.form-control(type="text" name="username" placeholder="Tên đăng nhập" value=body?body.username : "")
                          .row.mb-2
