@@ -11,7 +11,7 @@ block content
           .carousel-inner
                each food, index in foods
                     a.carousel-item(href="/foods/" + food.id class=index==0 ? "active" : "")
-                         img.d-block.w-100(src=food.thumbnail alt=food.name style="height: 35rem")
+                         img.d-block.w-100(src=food.thumbnail alt=food.name class="carousel-image")
                          .carousel-caption.d-none.d-md-block
                               h5 #{food.name}
                               p #{food.description}
