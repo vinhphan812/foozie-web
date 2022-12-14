@@ -140,19 +140,6 @@ footer.dark a {
     min-height: 300px;
 }
 
-.top-1st > td:nth-child(1) {
-    color: var(--bs-yellow);
-    font-size: 1.7rem !important;
-}
-.top-2nd > td:nth-child(1) {
-    color: var(--bs-cyan);
-    font-size: 1.7rem !important;
-}
-.top-3rd > td:nth-child(1) {
-    color: var(--bs-blue);
-    font-size: 1.7rem !important;
-}
-
 .slick-arrow::before {
     color: #aaa !important;
     font-size: 1.2rem !important;
