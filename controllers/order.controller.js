@@ -6,6 +6,8 @@ module.exports = {
           const { user, cart } = res.locals;
           res.locals.seo.title = "Thanh Toán";
 
+          if(!user) return res.redirect("/sign_in")
+
           if (!cart.length) return res.redirect("/");
 
           res.locals.vouchers = await VirtualDisplayVoucher.myVouchers(
