@@ -18,7 +18,9 @@ module.exports = {
 
           const foodTypes = await getFoodType();
           res.locals.foodTypes = foodTypes || [];
-          res.locals.foods = await Food.find({}).sort({ description: -1}).limit(5);
+          res.locals.foods = await Food.find({})
+               .sort({ description: -1 })
+               .limit(5);
 
           res.render("home/index");
           res.end();
@@ -64,7 +66,7 @@ module.exports = {
                       }
                     : {}),
                ...(typeIds.length ? { type: { $in: typeIds } } : {}),
-          }).sort({price: -1});
+          }).sort({ price: -1 });
 
           console.log(foods);
 
@@ -108,5 +110,12 @@ module.exports = {
           res.locals.vouchers = data;
 
           res.render("home/vouchers");
+     },
+     privacyPage: (req, res, next) => {
+          res.locals.seo.title = "Chính sách bảo mật";
+          res.locals.seo.description =
+               "Đây là trang hiển thị chính sách bảo mật của Foozie Foods";
+          res.locals.seo.keyworks = ["Chính sách bảo mật", "privacy"];
+          res.render("privacy");
      },
 };

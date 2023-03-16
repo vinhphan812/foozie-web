@@ -4,6 +4,7 @@ const {
      homePage,
      searchPage,
      vouchers,
+     privacyPage,
 } = require("../controllers/index.controller");
 const AuthRoute = require("./auth.route"),
      UserRoute = require("./user.route"),
@@ -21,5 +22,6 @@ router.use("/order", OrderRoute);
 router.get("/search", searchPage);
 router.get("/", homePage);
 router.get("/vouchers", vouchers);
+router.get("/privacy", privacyPage);
 
 module.exports = router;
